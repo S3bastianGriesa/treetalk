@@ -1,0 +1,19 @@
+{
+  "name": "treetalk",
+  "version": "0.0.0",
+  "description": "A Chatapp made by Treehouse",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/S3bastianGriesa/treetalk.git"
+  },
+  "author": "Sebastian Griesa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/S3bastianGriesa/treetalk/issues"
+  },
+  "homepage": "https://github.com/S3bastianGriesa/treetalk#readme"
+}

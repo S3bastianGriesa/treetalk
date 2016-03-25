@@ -2,9 +2,15 @@
   "name": "treetalk",
   "version": "0.0.0",
   "description": "A Chatapp made by Treehouse",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "debug": "^2.2.0",
+    "nconf": "^0.8.4"
   },
   "repository": {
     "type": "git",
@@ -15,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/S3bastianGriesa/treetalk/issues"
   },
-  "homepage": "https://github.com/S3bastianGriesa/treetalk#readme"
+  "homepage": "https://github.com/S3bastianGriesa/treetalk#readme",
+  "directories": {
+    "test": "test"
+  }
 }

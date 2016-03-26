@@ -3,6 +3,7 @@ const http = require('http');
 const nconf = require('nconf');
 const debug = require('debug')('server:app');
 
+
 nconf
   .argv()
   .env()
@@ -16,7 +17,7 @@ const webOptions = {
 };
 
 const app = express();
-const server = http.createServer();
+const server = http.createServer(app);
 
 server.listen(webOptions, function listeningCallback() {
   debug('server listen on: ', server.address());

@@ -2,7 +2,10 @@ const express = require('express');
 const http = require('http');
 const nconf = require('nconf');
 const debug = require('debug')('server:app');
+const path = require('path');
 
+const app = express();
+const server = http.createServer(app);
 
 nconf
   .argv()
@@ -16,8 +19,7 @@ const webOptions = {
   host: nconf.get('WEB_HOST')
 };
 
-const app = express();
-const server = http.createServer(app);
+app.use(express.static(path.join(__dirname, 'public/static')));
 
 server.listen(webOptions, function listeningCallback() {
   debug('server listen on: ', server.address());

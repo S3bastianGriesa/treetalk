@@ -19,7 +19,7 @@ const webOptions = {
   host: nconf.get('WEB_HOST')
 };
 
-app.use(express.static(path.join(__dirname, 'public/static')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 server.listen(webOptions, function listeningCallback() {
   debug('server listen on: ', server.address());

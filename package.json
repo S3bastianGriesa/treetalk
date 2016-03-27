@@ -18,7 +18,10 @@
     "type": "git",
     "url": "git+https://github.com/S3bastianGriesa/treetalk.git"
   },
-  "author": "Sebastian Griesa",
+  "authors": [
+    "Julian Biermann",
+    "Sebastian Griesa"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/S3bastianGriesa/treetalk/issues"

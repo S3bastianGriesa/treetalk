@@ -28,7 +28,7 @@ mongoose.connect(db_url);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongodb connection error:'));
 db.once('open', () => {
-  debug('mongodb connection succesful established.');
+  debug('mongodb connection successful established.');
   server.listen(webOptions, function listeningCallback() {
     debug('server listen on: ', server.address());
   });

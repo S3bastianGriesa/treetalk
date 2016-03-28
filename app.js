@@ -4,6 +4,7 @@ const nconf = require('nconf');
 const debug = require('debug')('server:app');
 const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
@@ -24,6 +25,11 @@ const webOptions = {
   host: nconf.get('WEB_HOST')
 };
 
+app.use(bodyParser.urlencoded({
+  extend: true
+}));
+
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(userRouter);
 

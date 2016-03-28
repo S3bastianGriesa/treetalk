@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
-
-const userService = require('./service');
+const debug = require('debug')('server:user:model');
 
 const UserSchema = new mongoose.Schema({
   username: String,
@@ -12,12 +10,13 @@ const UserSchema = new mongoose.Schema({
   salt: String
 });
 
+
 UserSchema
   .virtual('password')
-  .set(function setPassword(password) {
+  .set(function setPassword(password){
     this._password = password;
-    this.salt = userService.saltIt();
-    this.hashed_password = userService.encryptPassword(password, this);
+    this.salt = UserSchema.userService.makeSalt();
+    this.hashed_password = UserSchema.userService.encryptPassword(password, this);
   })
   .get(function getPassword() {
     return this._password;
@@ -34,5 +33,9 @@ UserSchema
       'role': this.role
     };
   });
+
+UserSchema.static('setUserService', function setUserService(service) {
+   UserSchema.userService = service;
+ });
 
 module.exports = mongoose.model('User', UserSchema);

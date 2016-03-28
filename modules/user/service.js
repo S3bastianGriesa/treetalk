@@ -12,9 +12,17 @@ class UserService {
     return UserModel.findByIdAndRemove(id).exec();
   }
 
-  getAllUsers() {
+  getAllUsersData() {
     return UserModel
             .find({})
+            .select('_id username email full_name role')
+            .exec();
+  }
+
+  getUserDataForID(id) {
+    debug('id: ' + id);
+    return UserModel
+            .find({_id: id})
             .select('_id username email full_name role')
             .exec();
   }

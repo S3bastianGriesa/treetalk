@@ -23,7 +23,7 @@ router.post('/user', (req, res) => {
 router.get('/user', (req, res) => {
   debug('receiving all userdata');
   userService
-    .getAllUsers()
+    .getAllUsersData()
     .then((userdata) => {
       debug('receiving userdata successful!');
       res.json(userdata);

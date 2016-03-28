@@ -7,6 +7,13 @@ class UserService {
     const user = new UserModel(parameters);
     return user.save();
   }
+
+  getAllUsers() {
+    return UserModel
+            .find({})
+            .select('user_data')
+            .exec();
+  }
 }
 
 module.exports = new UserService();

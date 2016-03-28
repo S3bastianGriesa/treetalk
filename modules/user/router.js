@@ -1,7 +1,6 @@
 const express = require('express');
 const debug = require('debug')('server:user:router');
 const _ = require('underscore');
-
 const userService = require('./service');
 const router = express.Router();
 
@@ -38,7 +37,7 @@ router.get('/user/:id', (req, res) => {
   const id = req.params.id;
   debug('receiving userdata for id: ' + id);
   userService
-    .getUserForID(id)
+    .getUserDataForID(id)
     .then((user) => {
       debug('receiving userdata successful!');
       res.json(user);

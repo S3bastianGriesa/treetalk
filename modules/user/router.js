@@ -34,6 +34,21 @@ router.get('/user', (req, res) => {
     });
 });
 
+router.get('/user/:id', (req, res) => {
+  const id = req.params.id;
+  debug('receiving userdata for id: ' + id);
+  userService
+    .getUserForID(id)
+    .then((user) => {
+      debug('receiving userdata successful!');
+      res.json(user);
+    })
+    .catch((err) => {
+      debug('an error occurred on receiving userdata. ${err}', err);
+      res.status(400).send(err);
+    });
+});
+
 router.delete('/user', (req, res) => {
   const id = _.pick(req.body, 'id').id;
   debug('deleting user ' + id);

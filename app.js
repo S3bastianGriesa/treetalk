@@ -26,7 +26,7 @@ const webOptions = {
 };
 
 app.use(bodyParser.urlencoded({
-  extend: true
+  extended: true
 }));
 
 app.use(bodyParser.json());

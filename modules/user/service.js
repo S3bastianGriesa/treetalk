@@ -1,4 +1,6 @@
 const debug = require('debug')('server:user:service');
+const crypto = require('crypto');
+
 const UserModel = require('./model');
 
 class UserService {
@@ -20,7 +22,6 @@ class UserService {
   }
 
   getUserDataForID(id) {
-    debug('id: ' + id);
     return UserModel
             .find({_id: id})
             .select('_id username email full_name role')
@@ -40,10 +41,10 @@ class UserService {
   }
 
   authenticate(password, user) {
-    return this.encryptPassword(password) === user.hashed_password;
+    return this.encryptPassword(password, user) === user.hashed_password;
   }
 
-  saltIt() {
+  makeSalt() {
     return crypto.randomBytes(16).toString('base64');
   }
 
@@ -57,4 +58,4 @@ class UserService {
   }
 }
 
-module.exports = new UserService();
+module.exports =  new UserService();

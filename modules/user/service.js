@@ -8,6 +8,10 @@ class UserService {
     return user.save();
   }
 
+  deleteUserForID(id) {
+    return UserModel.findByIdAndRemove(id).exec();
+  }
+
   getAllUsers() {
     return UserModel
             .find({})

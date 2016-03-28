@@ -11,7 +11,7 @@ class UserService {
   getAllUsers() {
     return UserModel
             .find({})
-            .select('user_data')
+            .select('_id username email full_name role')
             .exec();
   }
 }

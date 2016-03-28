@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 
 const UserSchema = new mongoose.Schema({
   username: String,
@@ -11,18 +12,18 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema
   .virtual('password')
-  .set((password) => {
+  .set(function setPassword(password) {
     this._password = password;
     this.salt = this.saltIt();
     this.hashed_password = this.encryptPassword(password);
   })
-  .get(() => {
+  .get(function getPassword() {
     return this._password;
   });
 
 UserSchema
   .virtual('user_data')
-  .get(() => {
+  .get(function getUserData() {
     return {
       '_id': this.id,
       'username': this.username,

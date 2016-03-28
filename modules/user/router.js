@@ -19,3 +19,17 @@ router.post('/user/create', (req, res) => {
       res.status(400).send(err);
     });
 });
+
+router.get('/user/getall', (req, res) => {
+  debug('receiving all userdata');
+  userService
+    .getAllUsers()
+    .then((userdata) => {
+      debug('receiving userdata successful!');
+      res.json(userdata);
+    })
+    .catch((err) => {
+      debug('an error occurred on receiving userdata. ${err}', err);
+      res.status(400).send(err);
+    });
+});

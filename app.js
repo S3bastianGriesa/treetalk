@@ -9,8 +9,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const server = http.createServer(app);
 
-const userRouter = require('./modules/user').router;
-const userService = require('./modules/user').service;
+const user = require('user');
 
 nconf
   .argv()
@@ -31,7 +30,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(userRouter);
+app.use(user.router);
 
 debug('Try to establish mongdb connection on: ' + db_url);
 mongoose.connect(db_url);

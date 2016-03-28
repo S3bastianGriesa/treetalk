@@ -10,7 +10,6 @@ const UserSchema = new mongoose.Schema({
   salt: String
 });
 
-
 UserSchema
   .virtual('password')
   .set(function setPassword(password){

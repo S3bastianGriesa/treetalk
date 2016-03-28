@@ -36,18 +36,4 @@ db.once('open', () => {
   server.listen(webOptions, function listeningCallback() {
     debug('server listen on: ', server.address());
   });
-  userService
-  .createUser({
-    username: 'S3bb',
-    email: 'sebastian.griesa@gmail.com',
-    full_name: 'Sebastian Griesa',
-    role: 'admin',
-    password: 'hallo123'
-  })
-  .then((user) => {
-    debug('successful created user!');
-  })
-  .catch((err) => {
-    debug('an error occurred on creating a user. #{err}.', err);
-  });
 });

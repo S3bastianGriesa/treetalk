@@ -20,10 +20,6 @@ class AuthenticationService {
       };
     });
   }
-
-  logout() {
-
-  }
 }
 
 module.exports = new AuthenticationService();

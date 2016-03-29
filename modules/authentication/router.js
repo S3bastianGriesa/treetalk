@@ -15,6 +15,8 @@ router.post('/login', function(req, res) {
         req.session.user = user;
 
         res.redirect('/app/index.html');
+      } else {
+        res.redirect('/login.html')
       }
     }).catch(function(err) {
     debug(err);
@@ -23,7 +25,9 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/app/logout', function(req, res) {
-  req.session.destroy();
+  if (req.session) {
+    req.session.destroy();
+  }
   res.redirect('/index.html');
 });
 

@@ -11,17 +11,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema
-  .virtual('password')
-  .set(function setPassword(password){
-    this._password = password;
-    this.salt = UserSchema.userService.makeSalt();
-    this.hashed_password = UserSchema.userService.encryptPassword(password, this);
-  })
-  .get(function getPassword() {
-    return this._password;
-  });
-
-UserSchema
   .virtual('user_data')
   .get(function getUserData() {
     return {
@@ -32,9 +21,5 @@ UserSchema
       'role': this.role
     };
   });
-
-UserSchema.static('setUserService', function setUserService(service) {
-   UserSchema.userService = service;
- });
 
 module.exports = mongoose.model('User', UserSchema);

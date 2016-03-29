@@ -3,10 +3,8 @@ const router = require('express').Router();
 const authenticationService = require('./service');
 
 router.post('/login', function(req, res) {
-  debug('Login request has been send');
   authenticationService.login(req.body.email, req.body.password).then(
     function(authentication) {
-      debug(authentication);
       if (authentication.isAuthenticated) {
         const user = authentication.user;
 
@@ -15,12 +13,13 @@ router.post('/login', function(req, res) {
 
         req.session.user = user;
 
+        debug(user);
+
         res.redirect('/app/index.html');
       } else {
         res.redirect('/login.html')
       }
     }).catch(function(err) {
-    debug(err);
     res.status(400).send('Something went wrong, please try again later');
   });
 });

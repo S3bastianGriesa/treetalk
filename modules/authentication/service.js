@@ -4,15 +4,13 @@ const crypoUtil = require('crypto-util');
 
 class AuthenticationService {
   login(email, password) {
-    debug('Login for ' + email);
     return userService.getUserByEmail(email).then(function(user) {
-      debug('User requested: ' + user.username);
       const isAuthenticated = false;
 
       if (user) {
         const salt = user.salt;
         const hashedPassword = cryptoUtil.createPasswordHash(password,
-          salt, 10000);
+          salt);
 
         isAuthenticated = user.hashed_password == hashedPassword;
       }

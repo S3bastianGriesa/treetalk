@@ -11,6 +11,8 @@ const uid = require('uid-safe');
 const app = express();
 const server = http.createServer(app);
 
+const authentication = require('authentication');
+
 nconf
   .argv()
   .env()
@@ -44,6 +46,8 @@ app.use(session({
   },
   store: mongoSessionStore
 }));
+
+app.use(authentication.router);
 
 debug('Try to establish mongdb connection on: ' + db_url);
 mongoose.connect(db_url);

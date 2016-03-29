@@ -7,11 +7,13 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBSessionStore = require('connect-mongodb-session')(session);
 const uid = require('uid-safe');
+const bodyParser = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
 
 const authentication = require('authentication');
+const user = require('user');
 
 nconf
   .argv()
@@ -46,7 +48,13 @@ app.use(session({
   },
   store: mongoSessionStore
 }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(user.router);
 app.use(authentication.router);
 
 debug('Try to establish mongdb connection on: ' + db_url);

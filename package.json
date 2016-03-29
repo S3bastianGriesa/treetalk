@@ -5,10 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node --use_strict app.js"
   },
   "dependencies": {
     "authentication": "file:modules\\authentication",
+    "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "connect-mongodb-session": "^1.1.1",
     "debug": "^2.2.0",
@@ -16,7 +17,8 @@
     "express-session": "^1.13.0",
     "mongoose": "^4.4.10",
     "nconf": "^0.8.4",
-    "uid-safe": "^2.1.0"
+    "uid-safe": "^2.1.0",
+    "user": "file:modules\\user"
   },
   "repository": {
     "type": "git",

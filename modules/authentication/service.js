@@ -1,8 +1,10 @@
+const debug = require('debug')('server:authentication:service')
 const userService = require('user').service;
 const crypoUtil = require('crypto-util');
 
 class AuthenticationService {
   login(email, password) {
+    debug('Login function called');
     return userService.getUserByEmail(email).then(function(user) {
       let isAuthenticated = false;
 

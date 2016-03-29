@@ -5,7 +5,8 @@ const debug = require('debug')('server:app');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const mongoSessionStore = require('connect-mongodb-session')(session);
+const MongoDBSessionStore = require('connect-mongodb-session')(session);
+const uid = require('uid-safe');
 
 const app = express();
 const server = http.createServer(app);
@@ -24,7 +25,7 @@ const webOptions = {
   host: nconf.get('WEB_HOST')
 };
 
-mongoSessionStore = new MongoDBStore({
+const mongoSessionStore = new MongoDBSessionStore({
   uri: db_url,
   collection: 'sessions'
 });
@@ -32,11 +33,14 @@ mongoSessionStore = new MongoDBStore({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   genid: function(req) {
-    return genuuid();
+    return uid.sync(18);
   },
   secret: 'UltraSuperSecretKeyForLulz',
+  resave: false,
+  saveUninitialized: true,
   cookie: {
-    maxAge: 30 * 60 * 60 * 1000
+    maxAge: 30 * 60 * 60 * 1000,
+    secure: true
   },
   store: mongoSessionStore
 }));

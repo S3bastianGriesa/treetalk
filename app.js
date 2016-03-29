@@ -37,7 +37,7 @@ app.use(session({
   secret: 'UltraSuperSecretKeyForLulz',
   cookie: {
     maxAge: 30 * 60 * 60 * 1000
-  }
+  },
   store: mongoSessionStore
 }));
 

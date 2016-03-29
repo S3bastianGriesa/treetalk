@@ -5,8 +5,8 @@ class CryptoUtil {
     crypto.randomBytes(size).toString('hex');
   }
 
-  createPasswordHash(password, salt, iterations) {
-    return crypto.pbkdf2Sync(password, salt, iterations, 64).toString('hex');
+  createPasswordHash(password, salt) {
+    return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('hex');
   }
 }
 

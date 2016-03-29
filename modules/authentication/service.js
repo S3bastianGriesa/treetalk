@@ -1,13 +1,13 @@
-'use strict'
 const debug = require('debug')('server:authentication:service')
 const userService = require('user').service;
 const crypoUtil = require('crypto-util');
 
 class AuthenticationService {
   login(email, password) {
-    debug('Login function called');
+    debug('Login for ' + email);
     return userService.getUserByEmail(email).then(function(user) {
-      let isAuthenticated = false;
+      debug('User requested: ' + user.username);
+      const isAuthenticated = false;
 
       if (user) {
         const salt = user.salt;

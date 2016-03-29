@@ -6,6 +6,7 @@ router.post('/login', function(req, res) {
   debug('Login request has been send');
   authenticationService.login(req.body.email, req.body.password).then(
     function(authentication) {
+      debug(authentication);
       if (authentication.isAuthenticated) {
         const user = authentication.user;
 

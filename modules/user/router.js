@@ -37,7 +37,7 @@ router.get('/user/:id', (req, res) => {
   const id = req.params.id;
   debug('receiving userdata for id: ' + id);
   userService
-    .getUserDataForID(id)
+    .getUserDataByID(id)
     .then((user) => {
       debug('receiving userdata successful!');
       res.json(user);
@@ -53,7 +53,7 @@ router.delete('/user', (req, res) => {
   debug('deleting user ' + id);
   if(!_.isUndefined(id)){
     userService
-    .deleteUserForID(id)
+    .deleteUserByID(id)
     .then(() => {
       debug('deleting user successful!');
       res.status(200).end();

@@ -10,7 +10,7 @@ class UserService {
     return user.save();
   }
 
-  deleteUserForID(id) {
+  deleteUserByID(id) {
     return UserModel.findByIdAndRemove(id).exec();
   }
 
@@ -21,22 +21,22 @@ class UserService {
             .exec();
   }
 
-  getUserDataForID(id) {
+  getUserDataByID(id) {
     return UserModel
             .find({_id: id})
             .select('_id username email full_name role')
             .exec();
   }
 
-  getUserForID(id) {
+  getUserByID(id) {
     return UserModel.findById(id).exec();
   }
 
-  getUserForUsername(username) {
+  getUserByUsername(username) {
     return UserModel.findOne({username: username}).exec();
   }
 
-  getUserForEmail(email) {
+  getUserByEmail(email) {
     return UserModel.findOne({email: email}).exec();
   }
 

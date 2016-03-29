@@ -1,3 +1,4 @@
+'use strict'
 const debug = require('debug')('server:authentication:service')
 const userService = require('user').service;
 const crypoUtil = require('crypto-util');
@@ -18,7 +19,7 @@ class AuthenticationService {
 
       return {
         isAuthenticated: isAuthenticated,
-        user: user;
+        user: user
       };
     });
   }

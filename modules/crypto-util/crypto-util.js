@@ -6,7 +6,9 @@ class CryptoUtil {
   }
 
   createPasswordHash(password, salt) {
-    return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('hex');
+    const buffer = new Buffer(salt, 'hex');
+    return crypto.pbkdf2Sync(password, buffer, 10000, 64, 'sha256').toString(
+      'hex');
   }
 }
 

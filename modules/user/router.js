@@ -19,7 +19,7 @@ router.post('/user', (req, res) => {
     });
 });
 
-router.post('/user/:id', (req, res) => {
+router.put('/user/:id', (req, res) => {
   const id = req.params.id;
   debug('updating userdata for id: ' + id);
   const parameters = _.pick(req.body, 'username', 'email', 'full_name', 'role', 'salt', 'hashed_password');

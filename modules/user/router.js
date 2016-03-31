@@ -5,7 +5,7 @@ const userService = require('./service');
 const router = express.Router();
 
 router.post('/user', (req, res) => {
-  const parameters = _.pick(req.body, 'username', 'email', 'full_name', 'role', 'password');
+  const parameters = _.pick(req.body, 'username', 'email', 'full_name', 'role', 'salt', 'hashed_password');
   debug('try to create user: ' + parameters);
   userService
     .createUser(parameters)

@@ -2,12 +2,29 @@ const mongoose = require('mongoose');
 const debug = require('debug')('server:user:model');
 
 const UserSchema = new mongoose.Schema({
-  username: String,
-  email: String,
+  username: {
+    type: String,
+    index: {unique: true},
+    required: true
+  },
+  email: {
+    type: String,
+    index: {unique: true},
+    required: true
+  },
   full_name: String,
-  role: String,
-  hashed_password: String,
-  salt: String
+  role: {
+    type: String,
+    required: true
+  },
+  hashed_password: {
+    type: String,
+    required: true
+  },
+  salt: {
+    type: String,
+    required: true
+  }
 });
 
 UserSchema

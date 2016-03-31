@@ -13,8 +13,6 @@ router.post('/login', function(req, res) {
 
         req.session.user = user;
 
-        debug(user);
-
         res.redirect('/app/index.html');
       } else {
         res.redirect('/login.html')

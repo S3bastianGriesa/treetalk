@@ -5,7 +5,7 @@ const crypoUtil = require('crypto-util');
 class AuthenticationService {
   login(email, password) {
     return userService.getUserByEmail(email).then(function(user) {
-      const isAuthenticated = false;
+      let isAuthenticated = false;
 
       if (user) {
         const salt = user.salt;

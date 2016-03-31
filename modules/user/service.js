@@ -1,5 +1,4 @@
 const debug = require('debug')('server:user:service');
-const crypto = require('crypto');
 
 const UserModel = require('./model');
 
@@ -40,21 +39,8 @@ class UserService {
     return UserModel.findOne({email: email}).exec();
   }
 
-  authenticate(password, user) {
-    return this.encryptPassword(password, user) === user.hashed_password;
-  }
-
-  makeSalt() {
-    return crypto.randomBytes(16).toString('base64');
-  }
-
-  encryptPassword(password, user){
-    if(!password || !user.salt) {
-      return '';
-    }
-
-    const salt = new Buffer(user.salt, 'base64');
-    return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+  updateUserByID(id, parameters) {
+    return UserModel.update({_id: id}, parameters).exec();
   }
 }
 

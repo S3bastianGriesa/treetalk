@@ -2,24 +2,30 @@ const mongoose = require('mongoose');
 const debug = require('debug')('server:user:model');
 
 const UserSchema = new mongoose.Schema({
-  username: String,
-  email: String,
+  username: {
+    type: String,
+    index: {unique: true},
+    required: true
+  },
+  email: {
+    type: String,
+    index: {unique: true},
+    required: true
+  },
   full_name: String,
-  role: String,
-  hashed_password: String,
-  salt: String
+  role: {
+    type: String,
+    required: true
+  },
+  hashed_password: {
+    type: String,
+    required: true
+  },
+  salt: {
+    type: String,
+    required: true
+  }
 });
-
-UserSchema
-  .virtual('password')
-  .set(function setPassword(password){
-    this._password = password;
-    this.salt = UserSchema.userService.makeSalt();
-    this.hashed_password = UserSchema.userService.encryptPassword(password, this);
-  })
-  .get(function getPassword() {
-    return this._password;
-  });
 
 UserSchema
   .virtual('user_data')
@@ -32,9 +38,5 @@ UserSchema
       'role': this.role
     };
   });
-
-UserSchema.static('setUserService', function setUserService(service) {
-   UserSchema.userService = service;
- });
 
 module.exports = mongoose.model('User', UserSchema);

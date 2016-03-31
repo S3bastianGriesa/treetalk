@@ -1,6 +1,6 @@
 {
   "name": "user",
-  "version": "1.0.4",
+  "version": "1.2.3",
   "description": "Local usermodule",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,6 @@
     "mongoose": "^4.4.10",
     "debug": "^2.2.0",
     "express": "^4.13.4",
-    "underscore": "^1.8.3",
-    "crypto": "^0.0.3"
+    "underscore": "^1.8.3"
   }
 }

@@ -19,6 +19,23 @@ router.post('/user', (req, res) => {
     });
 });
 
+router.post('/user/:id', (req, res) => {
+  const id = req.params.id;
+  debug('updating userdata for id: ' + id);
+  const parameters = _.pick(req.body, 'username', 'email', 'full_name', 'role', 'salt', 'hashed_password');
+  debug('parameters: ${parameters}', parameters);
+  userService
+    .updateUserByID(id, parameters)
+    .then(() => {
+      debug('updated user successful!');
+      res.status(200).end();
+    })
+    .catch((err) => {
+      debug('an error occurred on creating a user. ${err}', err);
+      res.status(400).send(err);
+    });
+});
+
 router.get('/user', (req, res) => {
   debug('receiving all userdata');
   userService

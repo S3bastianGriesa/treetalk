@@ -38,6 +38,10 @@ class UserService {
   getUserByEmail(email) {
     return UserModel.findOne({email: email}).exec();
   }
+
+  updateUserByID(id, parameters) {
+    return UserModel.update({_id: id}, parameters).exec();
+  }
 }
 
 module.exports =  new UserService();

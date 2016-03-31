@@ -2,13 +2,12 @@ const crypto = require('crypto');
 
 class CryptoUtil {
   createRandomSalt(size) {
-    crypto.randomBytes(size).toString('hex');
+    crypto.randomBytes(size).toString('base64');
   }
 
   createPasswordHash(password, salt) {
-    const buffer = new Buffer(salt, 'hex');
-    return crypto.pbkdf2Sync(password, buffer, 10000, 64, 'sha256').toString(
-      'hex');
+    return crypto.pbkdf2Sync(password, salt, 10000, 64)
+      .toString('base64');
   }
 }
 

@@ -10,4 +10,4 @@ class CryptoUtil {
   }
 }
 
-module.exports = new CryptoUtil;
+module.exports = new CryptoUtil();

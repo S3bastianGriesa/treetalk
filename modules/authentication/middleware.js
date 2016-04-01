@@ -3,7 +3,6 @@ const userService = require('user').service;
 
 class AuthenticationMiddleware {
   requiresLogin(req, res, next) {
-    debug('RequireLogin: Check if Session is valid');
     if (req.session && req.session.user) {
       userService.getUserDataByID(req.session.user.id).then(function(user) {
         if (user) {
@@ -12,7 +11,7 @@ class AuthenticationMiddleware {
         } else {
           res.redirect('/login');
         }
-      }).fatch(function(err) {
+      }).catch(function(err) {
         console.error(err);
         res.status(400).send(err);
       })

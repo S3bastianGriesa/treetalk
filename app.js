@@ -13,6 +13,7 @@ const app = express();
 const server = http.createServer(app);
 
 const authentication = require('authentication');
+const login = require('login');
 const user = require('user');
 
 nconf
@@ -55,7 +56,16 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(user.router);
-app.use(authentication.router);
+app.use(login.router);
+app.get('/app/chat', authentication.middleware.requiresLogin, (req, res) => {
+  res.sendFile('chat.html', {
+    root: './public'
+  });
+});
+// debug(authentication.middleware.requireLogin);
+// app.get('/app/chat', authentication.middleware.requireLogin, (req, res) => {
+//   res.sendFile('chat.html');
+// });
 
 debug('Try to establish mongdb connection on: ' + db_url);
 mongoose.connect(db_url);

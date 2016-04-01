@@ -16,7 +16,8 @@
     "url": "https://github.com/Treehouse-Gaming/treetalk/issues"
   },
   "dependencies": {
-    "crypto-util": "file:../crypto-util"
+    "crypto-util": "file:../crypto-util",
+    "user": "file:../user"
   },
   "homepage": "https://github.com/Treehouse-Gaming/treetalk#readme"
 }

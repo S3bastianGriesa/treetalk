@@ -39,7 +39,7 @@ app.use(session({
   genid: function(req) {
     return uid.sync(18);
   },
-  secret: 'UltraSuperSecretKeyForLulz',
+  secret: uid.sync(18),
   resave: false,
   saveUninitialized: true,
   cookie: {

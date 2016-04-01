@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const authenticationService = require('authentication');
+const authenticationService = require('authentication').service;
 
 router.get('/login', (req, res) => {
-  res.sendFile(login.html);
+  res.sendFile('/login.html', {
+    root: './public'
+  });
 });
 
 router.post('/login', (req, res) => {

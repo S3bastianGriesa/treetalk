@@ -46,15 +46,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(session({
-  genid: function(req) {
-    return uid.sync(18);
-  },
   secret: 'SuperSecretKeyLulz',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
-    maxAge: 30 * 60 * 60 * 1000,
-    secure: true
+    maxAge: 30 * 60 * 60 * 1000
   },
   store: new MongoDBSessionStore({
     mongooseConnection: db

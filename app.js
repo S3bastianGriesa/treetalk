@@ -62,10 +62,6 @@ app.get('/app/chat', authentication.middleware.requiresLogin, (req, res) => {
     root: './public'
   });
 });
-// debug(authentication.middleware.requireLogin);
-// app.get('/app/chat', authentication.middleware.requireLogin, (req, res) => {
-//   res.sendFile('chat.html');
-// });
 
 debug('Try to establish mongdb connection on: ' + db_url);
 mongoose.connect(db_url);

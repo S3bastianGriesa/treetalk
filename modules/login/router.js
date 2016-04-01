@@ -24,4 +24,11 @@ router.post('/login', (req, res) => {
   });
 });
 
+router.get('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy();
+  }
+  res.redirect('/login');
+});
+
 module.exports = router;

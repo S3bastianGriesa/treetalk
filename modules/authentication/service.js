@@ -1,6 +1,6 @@
 const debug = require('debug')('server:authentication:service')
 const userService = require('user').service;
-const crypoUtil = require('crypto-util');
+const cryptoUtil = require('crypto-util');
 
 class AuthenticationService {
   login(email, password) {
@@ -13,6 +13,9 @@ class AuthenticationService {
           salt);
 
         isAuthenticated = user.hashed_password == hashedPassword;
+
+        delete user.salt;
+        delete user.hashed_password;
       }
 
       return {

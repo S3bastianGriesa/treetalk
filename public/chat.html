@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap-theme.min.css" charset="utf-8">
   <link rel="stylesheet" href="/css/main.css" charset="utf-8">
 
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js" charset="utf-8"></script>
   <script src="/components/jquery/dist/jquery.min.js" charset="utf-8"></script>
+  <script src="/js/chat.js" charset="utf-8"></script>
   <title>Treetalk Chat Application</title>
 </head>
 
@@ -19,9 +21,9 @@
       <textarea id="chat" class="form-control" name="chat" rows="30" cols="1000" readonly></textarea>
     </div>
     <div id="message-panel" class="input-group col-lg-12">
-      <input type="text" class="form-control" name="message">
+      <input id="message" type="text" class="form-control" name="message">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Send</button>
+        <button id="send" class="btn btn-default" type="button">Send</button>
       </span>
     </div>
   </div>

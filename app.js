@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
+const io = require('socket.io')(server);
 
 const user = require('user');
 
@@ -40,5 +41,15 @@ db.once('open', () => {
   debug('mongodb connection successful established.');
   server.listen(webOptions, function listeningCallback() {
     debug('server listen on: ', server.address());
+  });
+});
+
+io.on('connection', (socket) => {
+  console.log('Client connected');
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+  socket.on('message', (message) => {
+    io.emit('message', message);
   });
 });

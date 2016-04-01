@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "authentication": "file:modules\\authentication",
+    "login": "file:modules\\login",
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "connect-mongodb-session": "^1.1.1",

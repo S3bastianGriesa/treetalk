@@ -1,0 +1,21 @@
+#container {
+  margin-top: 150px;
+}
+
+@media (max-height: 700px) {
+   #container {
+     margin-top: 100px;
+   }
+ }
+
+@media (max-height: 650px) {
+    #container {
+      margin-top: 50px;
+  }
+}
+
+@media (max-height: 600px) {
+    #container {
+      margin-top: 0;
+  }
+}

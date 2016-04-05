@@ -21,7 +21,7 @@ function createInputListener(validator, divid, error) {
 }
 
 function validate() {
-  const validation = (validateEmail() & validateUsername() & validatePassword() & validatePasswordRepeat());
+  const validation = (validateEmail() && validateUsername() && validatePassword() && validatePasswordRepeat());
   const register = $('#register');
   if(validation) {
     register.prop('disabled', false);

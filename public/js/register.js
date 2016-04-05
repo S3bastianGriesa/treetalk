@@ -1,21 +1,21 @@
-$(document).ready(function(){
-    registerInputListener('email', validateEmail, 'emaildiv');
-    registerInputListener('username', validateUsername, 'usernamediv');
-    registerInputListener('password',  validatePassword, 'passworddiv');
-    registerInputListener('password', validatePasswordRepeat, 'password_repeatdiv');
-    registerInputListener('password_repeat', validatePasswordRepeat, 'password_repeatdiv');
+$(document).ready(function() {
+    registerInputListener('email', validateEmail, 'emaildiv', getEmailError);
+    registerInputListener('username', validateUsername, 'usernamediv', getUsernameError);
+    registerInputListener('password',  validatePassword, 'passworddiv', getPasswordError);
+    registerInputListener('password', validatePasswordRepeat, 'password_repeatdiv', getPasswordRepeatError);
+    registerInputListener('password_repeat', validatePasswordRepeat, 'password_repeatdiv', getPasswordRepeatError);
 });
 
-function registerInputListener(elementid, validator, divid) {
-  const listener = createInputListener(validator, divid);
+function registerInputListener(elementid, validator, divid, error) {
+  const listener = createInputListener(validator, divid, error);
   const element = $('#' + elementid);
   element.change(listener);
   element.keyup(listener);
 }
 
-function createInputListener(validator, divid) {
+function createInputListener(validator, divid, error) {
   return function () {
-    decorateErrorDiv(validator(), divid);
+    decorateErrorDiv(validator(), divid, error());
     validate();
   };
 }
@@ -68,12 +68,39 @@ function isEmail(email) {
   return regex.test(email);
 }
 
-function decorateErrorDiv(validation, id) {
+function getEmailError() {
+  if(!validateEmail()) return 'Please insert a valid email address.';
+  else return '';
+}
+
+function getUsernameError() {
+  if(!validateUsername()) return 'Please insert a username.';
+  else return '';
+}
+
+function getPasswordError() {
+  if(!validatePassword()) return 'Please insert a password.';
+  else return '';
+}
+
+function getPasswordRepeatError() {
+  if(validatePassword() && !validatePasswordRepeat()) {
+    return 'Passwords need to be the same.';
+  }
+  else return '';
+}
+
+
+
+function decorateErrorDiv(validation, id, error) {
   const div = $('#' + id);
+  const errordiv = $('#' + id + 'error');
   if (validation) {
     div.removeClass('has-error');
+    errordiv.text(error);
   }
   else {
     div.addClass('has-error');
+    errordiv.text(error);
   }
 }

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/css/register.css" charset="utf-8">
 
   <script src="/components/jquery/dist/jquery.min.js" charset="utf-8"></script>
+  <script src="/js/register.js" charset="utf-8"></script>
   <title>Treetalk Chat Application</title>
 </head>
 
@@ -28,7 +29,7 @@
             <div class="row">
             <div class="col-md-12">
             <div class="form-group ">
-              <div class="input-group">
+              <div class="input-group" id="emaildiv">
               <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
               <input type="email" id="email" class="form-control" placeholder="Email" name="email">
             </div>
@@ -38,7 +39,7 @@
         <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-              <div class="input-group">
+              <div class="input-group" id="usernamediv">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
               <input type="text" id="username" class="form-control" placeholder="Username" name="username">
             </div>
@@ -48,7 +49,7 @@
             <div class="row">
             <div class="col-md-12">
             <div class="form-group">
-              <div class="input-group">
+              <div class="input-group" id="full_namediv">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
               <input type="text" id="full_name" class="form-control" placeholder="Full Name" name="full_name">
             </div>
@@ -58,7 +59,7 @@
             <div class="row">
             <div class="col-md-12">
             <div class="form-group">
-              <div class="input-group">
+              <div class="input-group" id="passworddiv">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
               <input type="password" id="password" class="form-control" placeholder="Password" name="password">
             </div>
@@ -68,7 +69,7 @@
             <div class="row">
             <div class="col-md-12">
             <div class="form-group">
-              <div class="input-group">
+              <div class="input-group" id="password_repeatdiv">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                 <input type="password" id="password_repeat" class="form-control" placeholder="Repeat Password" name="password_repeat">
               </div>
@@ -84,7 +85,7 @@
                   </a>
                 </div>
                 <div class="col-md-6">
-                  <button type="submit" class="btn btn-danger form-control btn-md disabled" disabled>
+                  <button type="submit" class="btn btn-danger form-control btn-md disabled" disabled id="register">
                     <i class="glyphicon glyphicon-ok text-default"></i>
                     Register
                   </button>

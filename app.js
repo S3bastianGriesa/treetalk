@@ -4,9 +4,12 @@ const nconf = require('nconf');
 const debug = require('debug')('server:app');
 const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
 const server = http.createServer(app);
+
+const user = require('user');
 
 nconf
   .argv()
@@ -21,7 +24,13 @@ const webOptions = {
   host: nconf.get('WEB_HOST')
 };
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(user.router);
 
 debug('Try to establish mongdb connection on: ' + db_url);
 mongoose.connect(db_url);

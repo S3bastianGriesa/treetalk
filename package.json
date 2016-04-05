@@ -5,14 +5,15 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "npm update && node --use_strict app.js"
   },
   "dependencies": {
-    "bootstrap": "^3.3.6",
+    "body-parser": "^1.15.0",
     "debug": "^2.2.0",
     "express": "^4.13.4",
     "mongoose": "^4.4.10",
-    "nconf": "^0.8.4"
+    "nconf": "^0.8.4",
+    "user": "file:./modules/user"
   },
   "repository": {
     "type": "git",

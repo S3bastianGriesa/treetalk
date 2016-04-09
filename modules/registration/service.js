@@ -5,11 +5,13 @@ const CryptoUtil = require('crypto-util');
 
 class RegistrationService {
   registerUser(parameters) {
-    this.validateUserData(parameters)
+    return this.validateUserData(parameters)
       .then(() => {
         parameters.salt = CryptoUtil.createRandomSalt(16);
-        parameters.hashed_password = CryptoUtil.createPasswordHash(parameters.password, salt);
-        const userdata = _.pick(parameters, 'email', 'username', 'full_name', 'salt', 'hashed_password');
+        console.log('pass: ' + parameters.password + ' salt: ' + parameters.salt );
+        parameters.hashed_password = CryptoUtil.createPasswordHash(parameters.password, parameters.salt);
+        parameters.role = 'user';
+        const userdata = _.pick(parameters, 'email', 'username', 'full_name', 'role', 'salt', 'hashed_password');
         return userService.createUser(userdata);
       });
   }

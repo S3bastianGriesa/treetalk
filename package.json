@@ -14,7 +14,8 @@
     "mongoose": "^4.4.10",
     "nconf": "^0.8.4",
     "user": "file:./modules/user",
-    "registration": "file:./modules/registration"
+    "registration": "file:./modules/registration",
+    "crypto-util": "file:./modules/crypto-util"
   },
   "repository": {
     "type": "git",

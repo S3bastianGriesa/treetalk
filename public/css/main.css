@@ -1,11 +1,20 @@
-p {
-  color: #f00;
-}
 #container {
   width: 80%;
   min-width: 800px;
   margin-top: 20px;
 }
+#menu {
+  float: right;
+}
+.widget {
+  border: 3px solid #6666AA;
+  height: 600px;
+  border-style: double;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+
 #chat {
   resize: none;
 }

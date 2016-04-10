@@ -14,8 +14,8 @@ class AuthenticationService {
 
         isAuthenticated = user.hashed_password == hashedPassword;
 
-        delete user.salt;
-        delete user.hashed_password;
+        user.salt = '';
+        user.hashed_password = '';
       }
 
       return {

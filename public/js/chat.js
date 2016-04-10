@@ -40,6 +40,9 @@ ChatWidget.prototype.render = function() {
         message.addClass('uneven');
     }
     this.list.append(message);
+    $("#chat-container").animate({
+        scrollTop: $('#chat-container').prop("scrollHeight")
+    }, 1000);
 };
 
 $(document).ready(function() {

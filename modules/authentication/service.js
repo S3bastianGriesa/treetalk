@@ -1,4 +1,4 @@
-const debug = require('debug')('server:authentication:service')
+const debug = require('debug')('server:authentication:service');
 const userService = require('user').service;
 const cryptoUtil = require('crypto-util');
 

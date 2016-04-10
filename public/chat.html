@@ -1,31 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css" charset="utf-8">
-  <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap-theme.min.css" charset="utf-8">
-  <link rel="stylesheet" href="/css/main.css" charset="utf-8">
+    <meta charset="UTF-8">
+    <title>Treehouse Chat</title>
 
-  <script src="/components/jquery/dist/jquery.min.js" charset="utf-8"></script>
-  <title>Treetalk Chat Application</title>
+    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css" charset="utf-8">
+    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap-theme.min.css" charset="utf-8">
+    <link rel="stylesheet" href="/css/chat.css">
+
+    <script src="/components/jquery/dist/jquery.min.js" charset="utf-8"></script>
 </head>
 
 <body>
-  <div id="container" class="center-block">
-    <h1>Treetalk Chat Application</h1>
-    <a href="/">Back to Index</a>
-    <a href="/logout">Logout</a>
-    <div id="chat-panel" class="input-group col-lg-12">
-      <textarea id="chat" class="form-control" name="chat" rows="30" cols="1000" readonly></textarea>
+    <div id="container" class="center row">
+        <div id="messanger-container" class="col-md-10 form-group input-group">
+            <input type="text" id="messanger-textfield" class="form-control"></input>
+            <span class="input-group-btn">
+              <button id="send-button" type="button" class="btn btn-default">Send</button>
+            </span>
+        </div>
     </div>
-    <div id="message-panel" class="input-group col-lg-12">
-      <input type="text" class="form-control" name="message">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Send</button>
-      </span>
-    </div>
-  </div>
 </body>
 
 </html>

@@ -2,3 +2,11 @@
   width: 80%;
   margin: auto;
 }
+
+#chat-container {
+  height: 80%;
+}
+
+#chat-message-list {
+  list-style: none;
+}

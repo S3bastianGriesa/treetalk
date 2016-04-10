@@ -48,11 +48,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(session({
-  secret: 'SuperSecretKeyLulz',
+  secret: nconf.get('SESSION_SECRET'),
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 30 * 60 * 60 * 1000
+    maxAge: 7 * 24 * 60 * 60 * 1000
   },
   store: new MongoDBSessionStore({
     mongooseConnection: db

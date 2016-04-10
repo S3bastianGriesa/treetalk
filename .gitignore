@@ -10,5 +10,4 @@ build/Release
 
 public/components
 
-#config.json file
 config.json

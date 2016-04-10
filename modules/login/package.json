@@ -1,0 +1,22 @@
+{
+  "name": "login",
+  "version": "1.0.0",
+  "description": "Login routing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Treehouse-Gaming/treetalk.git"
+  },
+  "author": "Julian Biermann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Treehouse-Gaming/treetalk/issues"
+  },
+  "dependencies": {
+    "authentication": "*"
+  },
+  "homepage": "https://github.com/Treehouse-Gaming/treetalk#readme"
+}

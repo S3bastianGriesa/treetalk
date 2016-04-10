@@ -1,0 +1,25 @@
+{
+  "name": "treetalk",
+  "description": "A Chatapp made by Treehouse",
+  "main": "app.js",
+  "authors": [
+    "Julian Biermann",
+    "Sebastian Griesa"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.2"
+  }
+}

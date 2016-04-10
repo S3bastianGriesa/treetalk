@@ -1,0 +1,14 @@
+p {
+  color: #f00;
+}
+#container {
+  width: 80%;
+  min-width: 800px;
+  margin-top: 20px;
+}
+#chat {
+  resize: none;
+}
+#chat-panel {
+  margin-bottom: 20px;
+}

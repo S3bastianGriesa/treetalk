@@ -13,7 +13,7 @@ class AuthenticationMiddleware {
                         res.redirect('/login');
                     }
                 })
-                .catch(function(err) {
+                .catch((err) => {
                     console.error(err);
                     res.status(400).send(err);
                 });

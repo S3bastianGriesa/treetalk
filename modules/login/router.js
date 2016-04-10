@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
                 res.redirect('/login');
             }
         })
-        .catch(function(err) {
+        .catch((err) => {
             console.error(err);
             res.status(400).send(err);
         });

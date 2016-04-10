@@ -1,12 +1,17 @@
 .center {
-  width: 80%;
-  margin: auto;
+    width: 80%;
+    margin: auto;
 }
-
 #chat-container {
-  height: 80%;
+    height: 80%;
+    height: 800px;
+    overflow: auto;
 }
-
 #message-list {
-  list-style: none;
+    list-style: none;
+}
+.even {
+}
+.uneven {
+    background-color: rgb(211, 250, 184);
 }

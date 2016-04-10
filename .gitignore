@@ -9,3 +9,5 @@ node_modules/
 build/Release
 
 public/components
+
+config.json

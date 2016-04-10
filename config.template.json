@@ -1,0 +1,6 @@
+{
+  "WEB_PORT": 8000,
+  "WEB_HOST": "localhost",
+  "DB_URL": "MongoDB URL",
+  "SESSION_SECRET": "Random String"
+}

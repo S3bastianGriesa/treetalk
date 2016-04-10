@@ -8,11 +8,17 @@
     "start": "npm update && node --use_strict app.js"
   },
   "dependencies": {
+    "authentication": "file:modules\\authentication",
     "body-parser": "^1.15.0",
+    "bootstrap": "^3.3.6",
+    "connect-mongo": "^1.1.0",
     "debug": "^2.2.0",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "login": "file:modules\\login",
     "mongoose": "^4.4.10",
     "nconf": "^0.8.4",
+    "uid-safe": "^2.1.0",
     "user": "file:./modules/user",
     "registration": "file:./modules/registration",
     "crypto-util": "file:./modules/crypto-util"

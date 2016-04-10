@@ -9,11 +9,30 @@ router.post('/register', (req, res) => {
   debug('registering user: ' + parameters.username);
   registrationService.registerUser(parameters)
     .then((user) => {
-      res.end(200);
+      res.status(200);
+      res.redirect('/login.html');
+      res.end();
     })
     .catch((err) => {
-      debug('Error occured during registration: ' + err);
+      debug('an error occured during registration: ' + err);
       res.send(err).end();
+    });
+});
+
+router.get('/register/email/:email', (req, res) => {
+  const email = req.params.email;
+  debug('checking email: ' + email);
+  registrationService.isEmailTaken(email)
+    .then((taken) => {
+      res.status(200);
+      res.json(taken);
+      res.end();
+    })
+    .catch((err) => {
+      debug('an error occured during checking an email: ' + err);
+      res.status(400);
+      res.send(err);
+      res.end();
     });
 });
 

@@ -39,17 +39,6 @@ db.once('open', () => {
     debug('mongodb connection successful established.');
     server.listen(webOptions, function listeningCallback() {
         debug('server listen on: ', server.address());
-        app.use(session({
-            secret: 'SuperSecretKeyLulz',
-            resave: false,
-            saveUninitialized: true,
-            cookie: {
-                maxAge: 30 * 60 * 60 * 1000
-            },
-            store: new MongoDBSessionStore({
-                mongooseConnection: db
-            })
-        }));
     });
 });
 
@@ -58,6 +47,17 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(session({
+  secret: 'SuperSecretKeyLulz',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 30 * 60 * 60 * 1000
+  },
+  store: new MongoDBSessionStore({
+    mongooseConnection: db
+  })
+}));
 
 app.use(user.router);
 app.use(login.router);

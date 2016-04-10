@@ -10,7 +10,6 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  //TODO: Validate input params.
   authenticationService.login(email, password).then(function(authentication) {
     if (authentication.isAuthenticated) {
       req.session.user = authentication.user;

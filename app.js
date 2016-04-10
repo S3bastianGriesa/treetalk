@@ -10,6 +10,7 @@ const app = express();
 const server = http.createServer(app);
 
 const user = require('user');
+const registration = require('registration');
 
 nconf
   .argv()
@@ -31,6 +32,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(user.router);
+app.use(registration.router);
 
 debug('Try to establish mongdb connection on: ' + db_url);
 mongoose.connect(db_url);

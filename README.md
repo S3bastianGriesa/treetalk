@@ -1,4 +1,4 @@
-# treetalk
+# treetalk vers. 0.0.0
 
 ## Installationguide
 - If not already installed, you need to install Node.js first

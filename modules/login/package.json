@@ -16,7 +16,7 @@
     "url": "https://github.com/Treehouse-Gaming/treetalk/issues"
   },
   "dependencies": {
-    "authentication": "file:../authentication"
+    "authentication": "*"
   },
   "homepage": "https://github.com/Treehouse-Gaming/treetalk#readme"
 }

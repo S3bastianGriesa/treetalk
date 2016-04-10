@@ -66,6 +66,13 @@ class RegistrationService {
       return Promise.reject('No Password.');
     }
   }
+
+  isEmailTaken(email) {
+    return userService.getUserByEmail(email)
+      .then((user) => {
+        return Boolean(user);
+      });
+  }
 }
 
 module.exports = new RegistrationService();

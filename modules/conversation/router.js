@@ -9,7 +9,7 @@ router.get('/conversations', (req, res) => {
       res.status(200).json(conversations);
     })
     .catch((err) => {
-      debug('GET /conversations: ${err}');
+      console.error('GET /conversations ${err}');
       res.status(500).end();
     });
 });
@@ -22,7 +22,7 @@ router.get('/conversations/:id', (req, res) => {
       res.status(200).json(conversation);
     })
     .catch((err) => {
-      debug('GET /conversations/${id}: ${err}');
+      console.error('GET /conversations/${id} ${err}');
       res.status(500).end();
     });
 });
@@ -35,7 +35,7 @@ router.post('/conversations', (req, res) => {
       res.status(200).end();
     })
     .catch((err) => {
-      debug('POST /conversations: ${err}');
+      console.error('POST /conversations ${err}');
       res.status(500).end();
     });
 });

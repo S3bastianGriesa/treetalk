@@ -8,7 +8,6 @@ class RegistrationService {
     return this.validateUserData(parameters)
       .then(() => {
         parameters.salt = CryptoUtil.createRandomSalt(16);
-        console.log('pass: ' + parameters.password + ' salt: ' + parameters.salt );
         parameters.hashed_password = CryptoUtil.createPasswordHash(parameters.password, parameters.salt);
         parameters.role = 'user';
         const userdata = _.pick(parameters, 'email', 'username', 'full_name', 'role', 'salt', 'hashed_password');

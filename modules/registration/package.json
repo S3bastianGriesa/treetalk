@@ -1,6 +1,6 @@
 {
   "name": "registration",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "registration module for treetalk",
   "main": "index.js",
   "scripts": {

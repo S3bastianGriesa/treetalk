@@ -1,49 +1,47 @@
-var Chat = function() {
-    this.count = 0;
-    this.messages = $('#chat-message-list');
+var MessageWidget = function() {
+    this.textfield = $('#messanger-textfield');
 };
 
-Chat.prototype.addMessage = function(msg) {
-    this.count++;
-    var messageEntry = $('<li></li>').html(msg);
-    this.messages.append(messageEntry);
+MessageWidget.prototype.getValue = function() {
+    return this.textfield.val();
 };
 
-Chat.prototype.clear = function() {
-    this.messages.empty();
+MessageWidget.prototype.clear = function() {
+    this.textfield.val('');
 };
 
-var ChatDOM = function() {
-    this.sendButton = $('#send-button');
-    this.messageList = $('#chat-message-list');
-    this.messangerTextfield = $('#messanger-textfield');
+var ChatWidget = function() {
+    this.messages = [];
+    this.list = $('#message-list');
 };
 
-ChatDOM.prototype.getMessangerTextfieldValue = function() {
-    return this.messangerTextfield.val();
+ChatWidget.prototype.addMessage = function(msg) {
+    this.messages.push(msg);
+    this.render();
 };
 
-ChatDOM.prototype.clearMessangerTextfieldValue = function() {
-    this.messangerTextfield.val('');
+ChatWidget.prototype.getLatestMessage = function() {
+  return this.messages[this.messages.length - 1];
 };
 
-ChatDOM.prototype.appendMessage = function(message) {
-    var listElement = $('<li></li>').html(message);
-    this.messageList.append(listElement);
+ChatWidget.prototype.render = function() {
+    var message = $('<li></li>').html(this.getLatestMessage());
+    this.list.append(message);
 };
 
 $(document).ready(function() {
-    var chat = new Chat();
-    var chatDom = new ChatDOM();
-    $('#send-button').click(function(event) {
-        var message = chatDom.getMessangerTextfieldValue();
-        chatDom.clearMessangerTextfieldValue();
-        chatDom.appendMessage(message);
-    });
-    $('#messanger-textfield').keypress(function(event) {
-        if (event.which == 13) {
-          chatDom.sendButton.click();
-          return false;
-        }
-    });
+  var messageWidget = new MessageWidget();
+  var chatWidget = new ChatWidget();
+  var sendButton = $('#send-button');
+  sendButton.click(function(event) {
+    var message = messageWidget.getValue();
+    messageWidget.clear();
+    chatWidget.addMessage(message);
+  });
+  messageWidget.textfield.keypress(function(event) {
+    if(event.which == 13) {
+      sendButton.click();
+      return false;
+    }
+  });
 });

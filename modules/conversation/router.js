@@ -16,7 +16,7 @@ router.get('/conversations', (req, res) => {
 
 router.get('/conversations/:id', (req, res) => {
   debug('GET /conversations/${id}');
-  const id = req.body.id;
+  const id = req.params.id;
   conversationService.getConversationById(id)
     .then((conversation) => {
       res.status(200).json(conversation);
@@ -38,6 +38,11 @@ router.post('/conversations', (req, res) => {
       console.error('POST /conversations ${err}');
       res.status(500).end();
     });
+});
+
+router.delete('/conversations/:id' (req, res) => {
+  debug('DELETE /conversations/' + req.params.id);
+  res.status(500).send('Not yet implemented');
 });
 
 module.exports = router;

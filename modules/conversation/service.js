@@ -1,7 +1,11 @@
+const debug = require('debug')('server:conversation:service');
 const Conversation = require('./model');
 
 class ConversationService {
-  createConversation(title, owner, access = 'public') {
+  createConversation(title, owner, access) {
+    if (!access) {
+      access = 'public';
+    }
     const conversation = new Conversation({
       title: title,
       owner: owner,

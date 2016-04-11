@@ -1,3 +1,4 @@
+require('strict-mode')(function() {
 const express = require('express');
 const http = require('http');
 const nconf = require('nconf');
@@ -66,4 +67,5 @@ app.get('/app/chat', authentication.middleware.requiresLogin, (req, res) => {
     res.sendFile('chat.html', {
         root: './public'
     });
+});
 });

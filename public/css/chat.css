@@ -4,11 +4,19 @@
 }
 #chat-container {
     height: 80%;
-    height: 800px;
+    height: 500px;
+    margin:auto;
     overflow: auto;
+    width:100%
 }
 #message-list {
     list-style: none;
+}
+#messanger-container {
+  overflow: hidden;
+  margin:auto;
+  margin-top: 30px;
+  width: 100%;
 }
 .even {
 }

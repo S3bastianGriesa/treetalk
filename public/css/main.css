@@ -12,6 +12,15 @@
   border-style: double;
   border-radius: 15px;
   padding: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.internalframe {
+  height: 400px;
+  width: 800px;
+  margin: auto;
+  overflow: hidden;
 }
 
 

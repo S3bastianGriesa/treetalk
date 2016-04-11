@@ -3,6 +3,8 @@
   remote_user: "{{ remote_user }}"
   tasks:
       - debug: msg="Distribution on remotesystem {{ ansible_distribution }}"
+      - include: stop-server.yml
       - include: deploy-repository.yml
       - include: setup-configuration.yml
       - include: build.yml
+      - include: start-server.yml

@@ -1,0 +1,4 @@
+- name: Stop server with forever
+  shell: forever stopall
+  become: true
+  become_method: sudo

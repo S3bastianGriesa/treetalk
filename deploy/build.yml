@@ -1,0 +1,16 @@
+- name: Install forever globally over NPM
+  npm: >
+        name=forever
+        global=yes
+        state=present
+  become: true
+  become_method: sudo
+
+- name: rebuild npm modules
+  shell: npm rebuild
+  args:
+    chdir: '{{ dest_path }}/treetalk'
+  register: npm_rebuild_feedback
+  become: true
+  become_method: sudo
+- debug: var=npm_rebuild_feedback.stdout

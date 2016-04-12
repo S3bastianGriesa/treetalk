@@ -1,0 +1,31 @@
+- name: Install forever globally over NPM
+  npm: >
+        name=forever
+        global=yes
+        state=present
+  become: true
+  become_method: sudo
+
+- name: Install bower globally over NPM
+  npm: >
+        name=bower
+        global=yes
+        state=present
+  become: true
+  become_method: sudo
+
+- name: rebuild npm modules
+  shell: npm rebuild
+  args:
+    chdir: '{{ dest_path }}/treetalk'
+  register: npm_rebuild_feedback
+  become: true
+  become_method: sudo
+- debug: var=npm_rebuild_feedback.stdout
+
+- name: rebuild bower modules
+  shell: bower rebuild
+  args:
+    chdir: '{{ dest_path }}/treetalk'
+  register: bower_rebuild_feedback
+- debug: var=bower_rebuild_feedback.stdout

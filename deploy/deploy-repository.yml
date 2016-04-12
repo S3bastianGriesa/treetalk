@@ -1,0 +1,55 @@
+- debug: msg="Copy from local/{{ src_path }} to remote/{{ dest_path }}"
+
+- name: zip content on local host
+  local_action: shell tar -czf {{ zip_name }} {{ project_name }}
+  run_once: true
+  args:
+    chdir: "{{ src_path }}"
+
+- name: clean up directory on remote host
+  file: >
+        path={{ dest_path }}
+        state=absent
+  become: true
+  become_method: sudo
+
+- name: create path on remote host
+  file: >
+        path={{ dest_path }}
+        state=directory
+  become: true
+  become_method: sudo
+
+- name: copy zip to remote host
+  copy: >
+        src={{ src_path }}/{{ zip_name }}
+        dest={{ dest_path }}
+  become: true
+  become_method: sudo
+
+- name: unzip content on remote host
+  shell: gunzip {{ zip_name }}
+  args:
+    chdir: "{{ dest_path }}"
+  become: true
+  become_method: sudo
+
+- name: unzip content on remote host
+  shell: tar -xvf {{ tar_name }}
+  args:
+    chdir: "{{ dest_path }}"
+  become: true
+  become_method: sudo
+
+- name: remove zip on local host
+  local_action: shell rm {{ zip_name }}
+  run_once: true
+  args:
+    chdir: "{{ src_path }}"
+
+- name: remove zip on remote host
+  file: >
+        path={{ dest_path }}/{{ zip_name }}
+        state=absent
+  become: true
+  become_method: sudo

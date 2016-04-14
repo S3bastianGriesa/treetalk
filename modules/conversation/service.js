@@ -3,79 +3,89 @@ const Conversation = require('./model');
 const _ = require('underscore');
 
 class ConversationService {
-  createOneToOneConversation(memberList) {
-    debug('createOneToOneConversation: ' + JSON.stringify(memberList));
+    createOneToOneConversation(memberList) {
+        debug('createOneToOneConversation: ' + JSON.stringify(memberList));
 
-    return this.createConversation(memberList[0] + ' - ' + memberList[1],
-      'private', memberList);
-  }
+        return this.createConversation(memberList[0] + ' - ' + memberList[1],
+            'private', memberList);
+    }
 
-  createConversation(title, access, ownerList, memberList) {
-    debug('createConversation');
+    createConversation(title, access, ownerList, memberList) {
 
-    const parameters = {
-      title: title || 'New Conversation',
-      access: access || 'private',
-      ownerList: [] || ownerList,
-      memberList: [] || memberList
-    };
+        const parameters = {
+            title: title || 'New Conversation',
+            access: access || 'private',
+            ownerList: [] || ownerList,
+            memberList: [] || memberList
+        };
 
-    const mergedMemberList = _.union(parameters.ownerList, parameters.memberList);
+        debug('createConversation: ' + JSON.stringify(parameters, null, 2));
 
-    const conversation = new Conversation({
-      title: parameters.title,
-      owners: parameters.ownerList,
-      access: parameters.access,
-      members: mergedMemberList
-    });
+        const mergedMemberList = _.union(parameters.ownerList, parameters.memberList);
 
-    debug(JSON.stringify(conversation, null, 2));
+        const conversation = new Conversation({
+            title: parameters.title,
+            owners: parameters.ownerList,
+            access: parameters.access,
+            members: mergedMemberList
+        });
 
-    return conversation.save();
-  }
+        debug(JSON.stringify(conversation, null, 2));
 
-  addMemberToConversation(conversationId, userId) {
-    return Conversation.findByIdAndUpdate(conversationId, {
-      $push: {
-        members: userId
-      }
-    }, {
-      safe: true,
-      upsert: true
-    });
-  }
+        return conversation.save();
+    }
 
-  removeMemberFromConversation(userId) {
-    throw new Error('Not yet implemented removeMemberFromConversation');
-  }
+    addMemberToConversation(conversationId, userId) {
+        return Conversation
+            .findByIdAndUpdate(conversationId, {
+                $push: {
+                    members: userId
+                }
+            }, {
+                safe: true,
+                upsert: true
+            });
+    }
 
-  getConversation(id) {
-    debug('getConversation: ' + id);
+    removeMemberFromConversation(userId) {
+        throw new Error('Not yet implemented removeMemberFromConversation');
+    }
 
-    return Conversation.findById(id).exec();
-  }
+    getConversation(id) {
+        debug('getConversation: ' + id);
 
-  getUserConversations(userId) {
-    debug('getUserConversations');
+        return Conversation
+            .findById(id)
+            .exec();
+    }
 
-    return Conversation.find({
-      members: userId
-    }).exec();
-  }
+    getUserConversations(userId) {
+        debug('getUserConversations');
 
-  getAllConversations() {
-    debug('getAllConversations');
+        return Conversation
+            .find({
+                members: userId
+            })
+            .exec();
+    }
 
-    return Conversation.find({}).exec();
-  }
+    getAllConversations() {
+        debug('getAllConversations');
 
-  getPublicConversations() {
-    debug('getPublicConversations');
+        return Conversation
+            .find({})
+            .exec();
+    }
 
-    return Conversation.find({
-      access: 'public'
-    }).exec();
-  }
+    getPublicConversations() {
+        debug('getPublicConversations');
+
+        return Conversation
+            .find({
+                access: 'public'
+            })
+            .exec();
+    }
 }
 
 module.exports = new ConversationService();

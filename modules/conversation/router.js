@@ -4,12 +4,10 @@ const conversationService = require('./service');
 const _ = require('underscore');
 
 router.post('/conversation', (req, res) => {
-
-    const body = _.pick(req.body, 'title', 'access', 'ownerList', 'memberList');
-
-    debug('POST /conversation ' + JSON.stringify(body, null, 2));
-
-    conversationService.createConversation(body.title, body.access, body.ownerList, body.memberList)
+    debug('POST /conversation');
+    debug('Body Content: ' + JSON.stringify(req.body, null, 2));
+    
+    conversationService.createConversation(req.body.title, req.body.access)
         .then((conversation) => {
             res.status(200).json(conversation);
         })

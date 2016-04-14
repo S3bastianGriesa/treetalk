@@ -3,52 +3,27 @@ const Conversation = require('./model');
 const _ = require('underscore');
 
 class ConversationService {
-    createOneToOneConversation(memberList) {
-        debug('createOneToOneConversation: ' + JSON.stringify(memberList));
+    createConversation(title, access, owner) {
+        debug('#createConversation()');
 
-        return this.createConversation(memberList[0] + ' - ' + memberList[1],
-            'private', memberList);
-    }
-
-    createConversation(title, access, ownerList, memberList) {
-
-        const parameters = {
-            title: title || 'New Conversation',
-            access: access || 'private',
-            ownerList: ownerList || [],
-            memberList: memberList || []
-        };
-
-        debug('createConversation: ' + JSON.stringify(parameters, null, 2));
-
-        const mergedMemberList = _.union(parameters.ownerList, parameters.memberList);
+        if (!owner) {
+            return Promise.reject(new Error('Owner must not be null'));
+        }
 
         const conversation = new Conversation({
-            title: parameters.title,
-            owners: parameters.ownerList,
-            access: parameters.access,
-            members: mergedMemberList
+            title: title || 'New Conversation',
+            access: access || 'private',
+            owners: [owner],
+            members: [owner]
         });
 
-        debug(JSON.stringify(conversation, null, 2));
+        debug('Creating a new Conversation: ' + JSON.stringify(conversation, null, 2));
 
         return conversation.save();
     }
 
-    addMemberToConversation(conversationId, userId) {
-        return Conversation
-            .findByIdAndUpdate(conversationId, {
-                $push: {
-                    members: userId
-                }
-            }, {
-                safe: true,
-                upsert: true
-            });
-    }
+    updateConversation(parameters) {
 
-    removeMemberFromConversation(userId) {
-        throw new Error('Not yet implemented removeMemberFromConversation');
     }
 
     getConversation(id) {

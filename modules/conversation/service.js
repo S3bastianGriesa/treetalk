@@ -15,8 +15,8 @@ class ConversationService {
         const parameters = {
             title: title || 'New Conversation',
             access: access || 'private',
-            ownerList: [] || ownerList,
-            memberList: [] || memberList
+            ownerList: ownerList || [],
+            memberList: memberList || []
         };
 
         debug('createConversation: ' + JSON.stringify(parameters, null, 2));

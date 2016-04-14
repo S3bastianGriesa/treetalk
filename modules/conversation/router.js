@@ -4,9 +4,10 @@ const conversationService = require('./service');
 const _ = require('underscore');
 
 router.post('/conversation', (req, res) => {
-    debug('POST /conversation');
 
     const body = _.pick(req.body, 'title', 'access', 'ownerList', 'memberList');
+
+    debug('POST /conversation ' + JSON.stringify(body, null, 2));
 
     conversationService.createConversation(body.title, body.access, body.ownerList, body.memberList)
         .then((conversation) => {
@@ -53,23 +54,23 @@ router.get('/conversation', (req, res) => {
     const filterMode = req.query.filter;
     let query = null;
 
-    if (filter === 'public') {
+    if (filterMode === 'public') {
         query = conversationService.getPublicConversations;
-    } else if (filter === 'user') {
+    } else if (filterMode === 'user') {
         query = conversationService.getUserConversations;
-    } else if (filter === 'all') {
+    } else if (filterMode === 'all') {
         query = conversationService.getAllConversations;
     } else {
-        res.status(400).send('Wrong filter value given: ' + filter);
+        res.status(400).send('Wrong filter value given: ' + filterMode);
     }
 
-    if (filter !== null) {
+    if (filterMode !== null && filterMode !== undefined) {
         query()
             .then((conversations) => {
-                res.send(200).json(conversations);
+                res.status(200).json(conversations);
             })
             .catch((err) => {
-                res.send(500).send(err);
+                res.status(500).send(err);
             });
     }
 });

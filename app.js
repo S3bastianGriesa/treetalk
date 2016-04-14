@@ -16,6 +16,7 @@ const authentication = require('authentication');
 const login = require('login');
 const user = require('user');
 const registration = require('registration');
+const conversation = require('conversation');
 
 nconf
     .argv()
@@ -62,6 +63,7 @@ app.use(session({
 app.use(user.router);
 app.use(login.router);
 app.use(registration.router);
+app.use(conversation.router);
 app.get('/app/chat', authentication.middleware.requiresLogin, (req, res) => {
     res.sendFile('chat.html', {
         root: './public'

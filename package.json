@@ -21,7 +21,8 @@
     "uid-safe": "^2.1.0",
     "user": "file:./modules/user",
     "registration": "file:./modules/registration",
-    "crypto-util": "file:./modules/crypto-util"
+    "crypto-util": "file:./modules/crypto-util",
+    "conversation": "file:modules\\conversation"
   },
   "repository": {
     "type": "git",

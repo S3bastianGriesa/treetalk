@@ -47,36 +47,37 @@ router.get('/conversation/:id', (req, res) => {
         });
 });
 
-router.get('/conversation/all', (req, res) => {
-    debug('GET /conversation/all');
+router.get('/conversation', (req, res) => {
+    debug('GET /conversation');
 
-    conversationService.getAllConversations()
-        .then((conversations) => {
-            res.send(200).json(conversations);
-        })
-        .catch((err) => {
-            res.send(500).send(err);
-        });
-});
+    const filterMode = req.query.filter;
+    let query = null;
 
-router.get('/conversation/user', (req, res) => {
-    debug('GET /conversation/user');
+    if (filter === 'public') {
+        query = conversationService.getPublicConversations;
+    } else if (filter === 'user') {
+        query = conversationService.getUserConversations;
+    } else if (filter === 'all') {
+        query = conversationService.getAllConversations;
+    } else {
+        res.status(400).send('Wrong filter value given: ' + filter);
+    }
 
-    const userId = req.session.user._id;
-
-    conversationService.getUserConversations()
-        .then((conversations) => {
-            res.send(200).json(conversations);
-        })
-        .catch((err) => {
-            res.status(500).send(err);
-        });
+    if (filter !== null) {
+        query()
+            .then((conversations) => {
+                res.send(200).json(conversations);
+            })
+            .catch((err) => {
+                res.send(500).send(err);
+            });
+    }
 });
 
 router.delete('/conversation/:id', (req, res) => {
     const id = req.params.id;
     debug('DELETE /conversation/' + id);
-    
+
     res.status(501).send('Not yet implemented');
 });
 

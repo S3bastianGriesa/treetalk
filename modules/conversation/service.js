@@ -23,7 +23,7 @@ class ConversationService {
     }
 
     updateConversation(parameters) {
-
+      res.status(503).send('Not implemented yet');
     }
 
     getConversation(id) {
@@ -35,7 +35,7 @@ class ConversationService {
     }
 
     getUserConversations(userId) {
-        debug('getUserConversations');
+        debug('getUserConversations called for User ID: ' + userId);
 
         return Conversation
             .find({

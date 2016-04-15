@@ -22,7 +22,7 @@ class UserService {
 
   getUserDataByID(id) {
     return UserModel
-            .find({_id: id})
+            .findById(id)
             .select('_id username email full_name role')
             .exec();
   }

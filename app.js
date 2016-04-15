@@ -49,22 +49,24 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(session({
-  secret: nconf.get('SESSION_SECRET'),
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000
-  },
-  store: new MongoDBSessionStore({
-    mongooseConnection: db
-  })
+    secret: nconf.get('SESSION_SECRET'),
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000
+    },
+    store: new MongoDBSessionStore({
+        mongooseConnection: db
+    })
 }));
 
 app.use(user.router);
 app.use(login.router);
 app.use(registration.router);
-app.use(conversation.router);
-app.get('/app/chat', authentication.middleware.requiresLogin, (req, res) => {
+app.use('/app', authentication.middleware.requiresLogin);
+app.use('/app/user', user.router);
+app.use('/app/user/:userId', conversation.router);
+app.get('/app/chat', (req, res) => {
     res.sendFile('chat.html', {
         root: './public'
     });

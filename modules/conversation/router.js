@@ -1,7 +1,10 @@
 const debug = require('debug')('server:conversation:router');
 const router = require('express').Router();
 const conversationService = require('./service');
+const conversationMiddleware = require('./middleware');
 const _ = require('underscore');
+
+router.use('/:userId/conversations', conversationMiddleware.urlUserIdMustMatchSessionUserId);
 
 router.post('/conversations', (req, res) => {
     debug('POST /conversations');
@@ -41,8 +44,8 @@ router.get('/conversations/:id', (req, res) => {
         });
 });
 
-router.get('/conversations', (req, res) => {
-    debug('GET /conversations');
+router.get('/:userId/conversations', (req, res) => {
+    debug('GET /' + req.params.userId + '/conversations');
 
     conversationService.getUserConversations(req.params.userId)
         .then((conversations) => {

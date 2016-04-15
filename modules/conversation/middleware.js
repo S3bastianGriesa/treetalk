@@ -5,8 +5,6 @@ class ConversationMiddleware {
     urlUserIdMustMatchSessionUserId(req, res, next) {
         debug('UrlUserIdMustMatchSessionUserId Session Object: ' + JSON.stringify(req.session, null, 2));
         debug('UrlUserIdMustMatchSessionUserId Session User Object: ' + JSON.stringify(req.session.user, null, 2));
-        debug('UrlUserIdMustMatchSessionUserId Session User Object ID: ' + req.session.user._id);
-        debug('UrlUserIdMustMatchSessionUserId URL Paramter User ID: ' + req.params.userId);
 
         if (req.params.userId && req.session && req.session.user && req.session.user._id) {
             const urlUserId = req.params.userId;

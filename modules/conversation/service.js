@@ -1,4 +1,5 @@
 const debug = require('debug')('server:conversation:service');
+const mongoose = require('mongoose');
 const Conversation = require('./model');
 const _ = require('underscore');
 
@@ -35,11 +36,11 @@ class ConversationService {
     }
 
     getUserConversations(userId) {
-        debug('getUserConversations called for User ID: ' + userId);
+        debug('GetUserConversations called for User ID: ' + userId);
 
         return Conversation
             .find({
-                members: userId
+                members: new mongoose.Types.ObjectId(userId)
             })
             .exec();
     }

@@ -3,9 +3,14 @@ const userService = require('user').service;
 const cryptoUtil = require('crypto-util');
 
 class AuthenticationService {
+
     login(email, password) {
+        debug('Login for E-Mail: ' + email);
+
         return userService.getUserByEmail(email)
             .then((user) => {
+                debug('Login query result: ' + JSON.stringify(user, null, 2));
+
                 let isAuthenticated = false;
 
                 if (user) {
@@ -13,11 +18,13 @@ class AuthenticationService {
                     const hashedPassword = cryptoUtil.createPasswordHash(password,
                         salt);
 
-                    isAuthenticated = user.hashed_password == hashedPassword;
+                    isAuthenticated = user.hashed_password === hashedPassword;
 
                     user.salt = '';
                     user.hashed_password = '';
                 }
+
+                debug('Login isAuthenticated: ' + isAuthenticated);
 
                 return {
                     isAuthenticated: isAuthenticated,
@@ -25,6 +32,7 @@ class AuthenticationService {
                 };
             });
     }
+
 }
 
 module.exports = new AuthenticationService();

@@ -1,0 +1,6 @@
+- name: Start server with forever
+  shell: forever start app.js
+  args:
+    chdir: "{{ dest_path }}/{{ project_name }}"
+  become: true
+  become_method: sudo

@@ -1,0 +1,7 @@
+- name: Generate and copy template for config
+  template: >
+              src=template/config.json.j2
+              dest={{ dest_path }}/{{ config_template_dest }}
+              mode=0644
+  become: true
+  become_method: sudo

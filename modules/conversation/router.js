@@ -15,6 +15,7 @@ router.post('/conversations', (req, res) => {
             res.status(200).json(conversation);
         })
         .catch((err) => {
+            console.error(err);
             res.status(500).send(err);
         });
 });
@@ -28,6 +29,7 @@ router.put('/conversations/:id', (req, res) => {
             res.status(200).json(conversation);
         })
         .catch((err) => {
+            console.error(err);
             res.status(500).send(err);
         });
 });
@@ -40,6 +42,7 @@ router.get('/conversations/:id', (req, res) => {
             res.status(200).json(conversation);
         })
         .catch((err) => {
+            console.error(err);
             res.status(500).send(err);
         });
 });
@@ -52,6 +55,7 @@ router.get('/:userId/conversations', (req, res) => {
             res.status(200).json(conversations);
         })
         .catch((err) => {
+            console.error(err);
             res.status(500).send(err);
         });
 });
@@ -59,7 +63,14 @@ router.get('/:userId/conversations', (req, res) => {
 router.delete('/conversations/:id', (req, res) => {
     debug('DELETE /conversations/' + req.params.id);
 
-    res.status(501).send('Not yet implemented');
+    conversationService.removeConversation(req.params.id)
+        .then((conversation) => {
+            res.status(200).json(conversation);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send(err);
+        });
 });
 
 module.exports = router;

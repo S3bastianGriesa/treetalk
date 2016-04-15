@@ -5,7 +5,7 @@ const _ = require('underscore');
 
 class ConversationService {
     createConversation(title, access, owner) {
-        debug('#createConversation()');
+        debug('CreateConversation called');
 
         if (!owner) {
             return Promise.reject(new Error('Owner must not be null'));
@@ -18,17 +18,30 @@ class ConversationService {
             members: [owner]
         });
 
-        debug('Creating a new Conversation: ' + JSON.stringify(conversation, null, 2));
+        debug('new Conversation: ' + JSON.stringify(conversation, null, 2));
 
         return conversation.save();
     }
 
-    updateConversation(parameters) {
-      res.status(503).send('Not implemented yet');
+    updateConversation(id, title, access, ownerList, memberList) {
+        debug('UpdateConersation called for Conversation ID: ' + id);
+
+        const updatedProperties = {
+            title: title,
+            access: access,
+            owners: ownerList,
+            members: memberList
+        };
+
+        debug('Updated Properties: ' + JSON.stringify(updatedProperties, null, 2));
+
+        return Conversation
+            .findByIdAndUpdate(id, updatedProperties)
+            .exec();
     }
 
     getConversation(id) {
-        debug('getConversation: ' + id);
+        debug('GetConversation called for Conversation ID: ' + id);
 
         return Conversation
             .findById(id)
@@ -46,7 +59,7 @@ class ConversationService {
     }
 
     getAllConversations() {
-        debug('getAllConversations');
+        debug('GetAllConversations called');
 
         return Conversation
             .find({})
@@ -54,12 +67,20 @@ class ConversationService {
     }
 
     getPublicConversations() {
-        debug('getPublicConversations');
+        debug('GetPublicConversations called');
 
         return Conversation
             .find({
                 access: 'public'
             })
+            .exec();
+    }
+
+    removeConversation(id) {
+        debug('RemoveConversation called for Conversation ID: ' + id);
+
+        return Conversation
+            .findByIdAndRemove(id)
             .exec();
     }
 }

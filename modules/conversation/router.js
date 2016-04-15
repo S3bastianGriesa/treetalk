@@ -3,11 +3,11 @@ const router = require('express').Router();
 const conversationService = require('./service');
 const _ = require('underscore');
 
-router.post('/conversation', (req, res) => {
-    debug('POST /conversation');
+router.post('/conversations', (req, res) => {
+    debug('POST /conversations');
     debug('Body Content: ' + JSON.stringify(req.body, null, 2));
-    
-    conversationService.createConversation(req.body.title, req.body.access)
+
+    conversationService.createConversation(req.body.title, req.body.access, req.params.userId)
         .then((conversation) => {
             res.status(200).json(conversation);
         })
@@ -16,14 +16,11 @@ router.post('/conversation', (req, res) => {
         });
 });
 
-router.put('/conversation', (req, res) => {
-    const id = req.body.id;
+router.put('/conversations/:id', (req, res) => {
+    debug('PUT /conversations/' + req.params.id);
+    debug('Body Content: ' + JSON.stringify(req.body, null, 2));
 
-    const body = _.pick(req.body, 'id', 'title', 'access', 'memberList', 'ownerList');
-
-    debug('PUT /conversation');
-
-    createConversation.updateConversation(body.id, body.title, body.access, body.memberList, body.ownerList)
+    createConversation.updateConversation(req.params.id, req.body.title, req.body.access, req.body.memberList, req.body.ownerList)
         .then((conversation) => {
             res.status(200).json(conversation);
         })
@@ -32,12 +29,10 @@ router.put('/conversation', (req, res) => {
         });
 });
 
-router.get('/conversation/:id', (req, res) => {
-    const id = req.params.id;
+router.get('/conversations/:id', (req, res) => {
+    debug('GET /conversations/' + req.params.id);
 
-    debug('GET /conversation/' + id);
-
-    conversationService.getConversation(id)
+    conversationService.getConversation(req.params.id)
         .then((conversation) => {
             res.status(200).json(conversation);
         })
@@ -46,36 +41,20 @@ router.get('/conversation/:id', (req, res) => {
         });
 });
 
-router.get('/conversation', (req, res) => {
-    debug('GET /conversation');
+router.get('/conversations', (req, res) => {
+    debug('GET /conversations');
 
-    const filterMode = req.query.filter;
-    let query = null;
-
-    if (filterMode === 'public') {
-        query = conversationService.getPublicConversations;
-    } else if (filterMode === 'user') {
-        query = conversationService.getUserConversations;
-    } else if (filterMode === 'all') {
-        query = conversationService.getAllConversations;
-    } else {
-        res.status(400).send('Wrong filter value given: ' + filterMode);
-    }
-
-    if (filterMode !== null && filterMode !== undefined) {
-        query()
-            .then((conversations) => {
-                res.status(200).json(conversations);
-            })
-            .catch((err) => {
-                res.status(500).send(err);
-            });
-    }
+    conversationService.getUserConversations(req.params.userId)
+        .then((conversations) => {
+            res.status(200).json(conversations);
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        });
 });
 
-router.delete('/conversation/:id', (req, res) => {
-    const id = req.params.id;
-    debug('DELETE /conversation/' + id);
+router.delete('/conversations/:id', (req, res) => {
+    debug('DELETE /conversations/' + req.params.id);
 
     res.status(501).send('Not yet implemented');
 });

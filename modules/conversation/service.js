@@ -22,7 +22,9 @@ class ConversationService {
         debug('Update Conversation Properties: ' + JSON.stringify(properties, null, 2));
 
         return Conversation
-            .findByIdAndUpdate(id, properties)
+            .findByIdAndUpdate(id, properties, {
+                'new': true
+            })
             .exec();
     }
 

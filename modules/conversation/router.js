@@ -58,13 +58,6 @@ router.get('/conversations', (req, res) => {
         getConversationStrategy = conversationService.getPublicConversations;
     }
 
-    if (req.query.filter === 'admin') {
-        if (req.session.user.role === 'admin') {
-            isUserRelatedFunctionCall = false;
-            getConversationStrategy = conversationService.getAllConversations;
-        }
-    }
-
     let promise;
 
     if (isUserRelatedFunctionCall) {

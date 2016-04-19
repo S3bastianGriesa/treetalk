@@ -44,14 +44,6 @@ class ConversationService {
             .exec();
     }
 
-    getAllConversations() {
-        debug('Get all Conversations');
-        //TODO: [JBI] Filter for all conversations but 1 to 1 conversations.
-        return Conversation
-            .find({})
-            .exec();
-    }
-
     getPublicConversations() {
         debug('Get public Conversations');
 

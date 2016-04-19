@@ -1,7 +1,6 @@
 const debug = require('debug')('server:conversation:service');
 const mongoose = require('mongoose');
 const Conversation = require('./model');
-const _ = require('underscore');
 
 class ConversationService {
     createConversation(title, access, owner) {

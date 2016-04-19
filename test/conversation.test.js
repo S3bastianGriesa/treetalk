@@ -2,10 +2,45 @@ const supertest = require('supertest');
 const should = require('should');
 const server = supertest.agent('http://localhost:8000'); //TODO: [JBI] Create a common test case which uses these dependencies
 
+let userId;
+
 describe('Conversation Module', () => {
+    before(() => {
+        const loginData = {
+            email: 'test@mocha.de',
+            password: 'mocha'
+        };
+
+        server
+            .post('/login')
+            .send(loginData)
+            .end((err, res) => {
+                if (!err) {
+                    userId = res.data.user._id;
+                    done();
+                } else {
+                    return err;
+                }
+            });
+    });
+
     describe('POST /conversations', () => {
         it('Should create a new Conversation and return it', (done) => {
+            const conversation = {
+                title: 'Mocha Test Conversation',
+                access: 'public',
+                owner: ''
+            };
 
+            server
+                .post('/conversations')
+                .send(conversation)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.data.should.equal(conversation);
+                    done();
+                });
         });
     });
 
@@ -17,7 +52,13 @@ describe('Conversation Module', () => {
 
     describe('GET /users/:userId/conversations', () => {
         it('Should return all Conversations where the User is a member of', (done) => {
-
+          server
+          .get('/users/' + userId + '/conversations')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            
+          });
         });
 
         it('Should return an Error when the URL Parameter :userId is not the same as the logged in User ID', (done) => {

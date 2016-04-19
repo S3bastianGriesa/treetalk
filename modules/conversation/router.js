@@ -4,8 +4,6 @@ const conversationService = require('./service');
 const conversationMiddleware = require('./middleware');
 const _ = require('underscore');
 
-router.use('/users/:userId/conversations', conversationMiddleware.urlUserIdMustMatchSessionUserId);
-
 router.post('/conversations', (req, res) => {
     debug('POST /conversations');
     debug('Body Content: ' + JSON.stringify(req.body, null, 2));
@@ -26,7 +24,7 @@ router.put('/conversations/:id', (req, res) => {
 
     const properties = _.pick(req.body, 'title', 'access', 'moderators', 'members');
 
-    createConversation.updateConversation(req.params.id, properties)
+    conversationService.updateConversation(req.params.id, properties)
         .then((conversation) => {
             res.status(200).json(conversation);
         })

@@ -15,8 +15,7 @@ const ConversationSchema = new mongoose.Schema({
     },
     moderators: {
         type: [mongoose.Schema.ObjectId],
-        ref: 'User',
-        required: true
+        ref: 'User'
     },
     members: {
         type: [mongoose.Schema.ObjectId],

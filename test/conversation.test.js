@@ -2,8 +2,6 @@ const supertest = require('supertest');
 const should = require('should');
 const server = supertest.agent('http://localhost:8000'); //TODO: [JBI] Create a common test case which uses these dependencies
 
-let userId;
-
 describe('Conversation Module', () => {
     before(() => {
         const loginData = {
@@ -15,12 +13,8 @@ describe('Conversation Module', () => {
             .post('/login')
             .send(loginData)
             .end((err, res) => {
-                if (!err) {
-                    userId = res.data.user._id;
-                    done();
-                } else {
-                    return err;
-                }
+                should.not.exists(err);
+                server.saveCookies(res);
             });
     });
 
@@ -29,7 +23,7 @@ describe('Conversation Module', () => {
             const conversation = {
                 title: 'Mocha Test Conversation',
                 access: 'public',
-                owner: ''
+                owner: 'TEST' //TODO: [jbi] Find out how to get a test user
             };
 
             server
@@ -38,6 +32,7 @@ describe('Conversation Module', () => {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end((err, res) => {
+                    res.should.have.status(200);
                     res.data.should.equal(conversation);
                     done();
                 });
@@ -52,17 +47,27 @@ describe('Conversation Module', () => {
 
     describe('GET /users/:userId/conversations', () => {
         it('Should return all Conversations where the User is a member of', (done) => {
-          server
-          .get('/users/' + userId + '/conversations')
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .end((err, res) => {
-            
-          });
+            server
+                .get('/users/' + userId + '/conversations')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  should.not.exists(err);
+                  res.should.have.status(200);
+                  res.data.should.not.be.null();
+                  done();
+                });
         });
 
         it('Should return an Error when the URL Parameter :userId is not the same as the logged in User ID', (done) => {
-
+          server
+          .get('/users/randomUserIdWhichShouldNotExist/conversations')
+          .expect(503)
+          .end((err, res) => {
+            should.exists(err);
+            res.should.have.status(503);
+            done();
+          });
         });
     });
 

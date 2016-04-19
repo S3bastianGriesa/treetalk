@@ -61,12 +61,12 @@ require('strict-mode')(function() {
             mongooseConnection: db
         })
     }));
+    app.use('/app', authentication.middleware.requiresLogin);
 
     app.use(user.router);
     app.use(login.router);
     app.use(registration.router);
     app.use('/app', conversation.router);
-    app.use('/app', authentication.middleware.requiresLogin);
     app.get('/app/chat', (req, res) => {
         res.sendFile('chat.html', {
             root: './public'

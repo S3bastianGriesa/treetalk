@@ -41,5 +41,10 @@
   "homepage": "https://github.com/S3bastianGriesa/treetalk#readme",
   "directories": {
     "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.1",
+    "supertest": "^1.2.0"
   }
 }

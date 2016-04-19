@@ -4,13 +4,13 @@ const conversationService = require('./service');
 const conversationMiddleware = require('./middleware');
 const _ = require('underscore');
 
-router.use('/:userId/conversations', conversationMiddleware.urlUserIdMustMatchSessionUserId);
+router.use('/users/:userId/conversations', conversationMiddleware.urlUserIdMustMatchSessionUserId);
 
 router.post('/conversations', (req, res) => {
     debug('POST /conversations');
     debug('Body Content: ' + JSON.stringify(req.body, null, 2));
 
-    conversationService.createConversation(req.body.title, req.body.access, req.params.userId)
+    conversationService.createConversation(req.body.title, req.body.access, req.session.user._id)
         .then((conversation) => {
             res.status(200).json(conversation);
         })
@@ -24,7 +24,9 @@ router.put('/conversations/:id', (req, res) => {
     debug('PUT /conversations/' + req.params.id);
     debug('Body Content: ' + JSON.stringify(req.body, null, 2));
 
-    createConversation.updateConversation(req.params.id, req.body.title, req.body.access, req.body.memberList, req.body.ownerList)
+    const properties = _.pick(req.body, 'title', 'access', 'moderators', 'members');
+
+    createConversation.updateConversation(req.params.id, properties)
         .then((conversation) => {
             res.status(200).json(conversation);
         })
@@ -47,8 +49,8 @@ router.get('/conversations/:id', (req, res) => {
         });
 });
 
-router.get('/:userId/conversations', (req, res) => {
-    debug('GET /' + req.params.userId + '/conversations');
+router.get('/users/:userId/conversations', (req, res) => {
+    debug('GET /users/' + req.params.userId + '/conversations');
 
     conversationService.getUserConversations(req.params.userId)
         .then((conversations) => {

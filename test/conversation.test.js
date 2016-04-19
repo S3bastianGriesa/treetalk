@@ -1,13 +1,15 @@
-const supertest = require('supertest');
+const SERVER_URL = 'http://localhost:8000';
+
 const should = require('should');
-const request = supertest.agent('http://localhost:8000'); //TODO: [JBI] Create a common test case which uses these dependencies
+const request = require('supertest')(SERVER_URL);
+const agent = require('supertest').agent(SERVER_URL);
 const _ = require('underscore');
 
 describe('Conversation Module', () => {
     before((done) => {
         const loginData = {
             email: 'test@mocha.de',
-            password: 'mocha'
+            password: 'test'
         };
 
         request
@@ -15,20 +17,30 @@ describe('Conversation Module', () => {
             .send(loginData)
             .end((err, res) => {
                 should.not.exist(err);
-                request.saveCookies(res);
+                agent.saveCookies(res);
+                console.log(JSON.stringify(res, null, 2));
                 done();
             });
     });
 
     describe('POST /conversations', () => {
+        beforeEach((done) => {
+
+        });
+
         it('Should create a new conversation and return it', (done) => {
             const conversation = {
                 title: 'Mocha Test Conversation',
                 access: 'public'
             };
 
-            request
-                .post('/conversations')
+            const req = request.post('/conversations');
+
+            agent.attachCookies(req);
+
+            console.log(JSON.stringify(req, null, 2));
+
+            req
                 .send(conversation)
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -45,13 +57,9 @@ describe('Conversation Module', () => {
     });
 
     describe('PUT /conversations/:id', () => {
-        let testConversation = null;
-        before((done) => {
-            testConversation = createTestConversation('TEST_PUT_TITLE', 'public');
-            done();
-        });
-
         it('Should update a conversation and return it', (done) => {
+            done(new Error('Not yet implemented'));
+
             const properties = {
                 title: 'TEST Changed Title',
                 access: 'private',
@@ -78,13 +86,13 @@ describe('Conversation Module', () => {
     describe('GET /conversations', () => {
         it('Should return all conversations where the user is a member of', (done) => {
             request
-                .get('/users/' + userId + '/conversations')
+                .get('/app/conversations')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end((err, res) => {
-                    should.not.exists(err);
-                    res.should.have.status(200);
-                    res.data.should.not.be.null();
+                    should.not.exist(err);
+                    res.status.should.equal(200);
+                    res.data.should.exist();
                     done();
                 });
         });
@@ -95,9 +103,9 @@ describe('Conversation Module', () => {
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
-                    should.not.exists(err);
-                    res.should.have.status(200);
-                    res.data.should.not.be.null();
+                    should.not.exist(err);
+                    res.status.should.equal(200);
+                    res.data.should.exist();
                     //TODO: [JBI] iterate over array and validate with should
                     res.data[0].access.should.equal('public');
                     done();
@@ -136,7 +144,9 @@ describe('Conversation Module', () => {
                 });
         });
 
-        it('Should return an Error when the user is not a member of the conversation', (done) => {});
+        it('Should return an Error when the user is not a member of the conversation', (done) => {
+            done(new Error('Not yet implemented'));
+        });
     });
 
     describe('DELETE /conversations/:id', () => {});

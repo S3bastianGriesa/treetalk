@@ -21,6 +21,8 @@ class ConversationService {
         debug('Update Conversation: ' + id);
         debug('Update Conversation Properties: ' + JSON.stringify(properties, null, 2));
 
+        properties.members = _.union(properties.moderators, properties.members);
+
         return Conversation
             .findByIdAndUpdate(id, properties, {
                 'new': true

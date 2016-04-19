@@ -3,7 +3,6 @@ const should = require('should');
 const server = supertest.agent('http://localhost:8000'); //TODO: [JBI] Create a common test case which uses these dependencies
 
 describe('Conversation Module', () => {
-
     describe('POST /conversations', () => {
         it('Should create a new Conversation and return it', (done) => {
 
@@ -38,10 +37,22 @@ describe('Conversation Module', () => {
         it('Should return an Error when the User is not a member of the Conversation and has no admin role', (done) => {
 
         });
+
+        it('Should return an Error when the Conversation is 1 to 1 and the User is not a member of it', (done) => {
+
+        });
     });
 
     describe('DELETE /conversations/:id', () => {
         it('Should delete a conversation from the databse and return it', (done) => {
+
+        });
+
+        it('Should delete a Conversation when the User is the owner of it', (done) => {
+
+        });
+
+        it('Should delete a Conversation when the User has an admin role and the conversation is not 1 to 1', (done) => {
 
         });
     });

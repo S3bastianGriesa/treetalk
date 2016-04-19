@@ -49,10 +49,33 @@ router.get('/conversations/:id', (req, res) => {
         });
 });
 
-router.get('/users/:userId/conversations', (req, res) => {
-    debug('GET /users/' + req.params.userId + '/conversations');
+router.get('/conversations', (req, res) => {
+    debug('GET /conversations?filter=' + req.query.filter);
 
-    conversationService.getUserConversations(req.params.userId)
+    let getConversationStrategy = conversationService.getUserConversations;
+    let isUserRelatedFunctionCall = true;
+
+    if (req.query.filter === 'public') {
+        isUserRelatedFunctionCall = false;
+        getConversationStrategy = conversationService.getPublicConversations;
+    }
+
+    if (req.query.filter === 'admin') {
+        if (req.session.user.role === 'admin') {
+            isUserRelatedFunctionCall = false;
+            getConversationStrategy = conversationService.getAllConversations;
+        }
+    }
+
+    let promise;
+
+    if (isUserRelatedFunctionCall) {
+        promise = getConversationStrategy(req.session.user._id);
+    } else {
+        promise = getConversationStrategy();
+    }
+
+    promise
         .then((conversations) => {
             res.status(200).json(conversations);
         })

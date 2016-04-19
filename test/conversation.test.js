@@ -1,21 +1,22 @@
 const supertest = require('supertest');
 const should = require('should');
-const server = supertest.agent('http://localhost:8000'); //TODO: [JBI] Create a common test case which uses these dependencies
+const request = supertest.agent('http://localhost:8000'); //TODO: [JBI] Create a common test case which uses these dependencies
 const _ = require('underscore');
 
 describe('Conversation Module', () => {
-    before(() => {
+    before((done) => {
         const loginData = {
             email: 'test@mocha.de',
             password: 'mocha'
         };
 
-        server
+        request
             .post('/login')
             .send(loginData)
             .end((err, res) => {
-                should.not.exists(err);
-                server.saveCookies(res);
+                should.not.exist(err);
+                request.saveCookies(res);
+                done();
             });
     });
 
@@ -26,12 +27,13 @@ describe('Conversation Module', () => {
                 access: 'public'
             };
 
-            server
+            request
                 .post('/conversations')
                 .send(conversation)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end((err, res) => {
+                    should.not.exist(err);
                     res.should.have.status(200);
                     res.data.title.should.equal(conversation.title);
                     res.data.access.should.equal(conversation.access);
@@ -43,14 +45,39 @@ describe('Conversation Module', () => {
     });
 
     describe('PUT /conversations/:id', () => {
-        it('Should update a conversation with new properties and and return the old data it', (done) => {
+        let testConversation = null;
+        before((done) => {
+            testConversation = createTestConversation('TEST_PUT_TITLE', 'public');
+            done();
+        });
 
+        it('Should update a conversation and return it', (done) => {
+            const properties = {
+                title: 'TEST Changed Title',
+                access: 'private',
+                moderators: ['TEST_USER_ID']
+            };
+
+            request
+                .put('/app/conversations/' + testConversation._id)
+                .send(properties)
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    res.status.should.equal(200);
+                    res.data.title.should.equal(properties.title);
+                    res.data.access.should.equal(properties.access);
+                    res.data.moderators.should.containEql('TEST_USER_ID');
+                    res.data.members.should.containEql('TEST_USER_ID');
+                    done();
+                });
         });
     });
 
     describe('GET /conversations', () => {
         it('Should return all conversations where the user is a member of', (done) => {
-            server
+            request
                 .get('/users/' + userId + '/conversations')
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -63,7 +90,7 @@ describe('Conversation Module', () => {
         });
 
         it('Should return all conversations with public access', (done) => {
-            server
+            request
                 .get('/app/conversations?filter=public')
                 .expect(200)
                 .expect('Content-Type', /json/)
@@ -87,7 +114,7 @@ describe('Conversation Module', () => {
                 access: 'public'
             };
 
-            server
+            request
                 .post('/app/conversations')
                 .send(testConversationData)
                 .end((err, res) => {
@@ -96,7 +123,7 @@ describe('Conversation Module', () => {
         });
 
         it('Should return a conversation where the user is a member of', (done) => {
-            server
+            request
                 .get('/app/conversations/' + testConversation._id)
                 .expect(200)
                 .expect('Content-Type', /json/)
@@ -109,10 +136,21 @@ describe('Conversation Module', () => {
                 });
         });
 
-        it('Should return an Error when the user is not a member of the conversation', (done) => {
-        });
+        it('Should return an Error when the user is not a member of the conversation', (done) => {});
     });
 
-    describe('DELETE /conversations/:id', () => {
-    });
+    describe('DELETE /conversations/:id', () => {});
 });
+
+function createTestConversation(title, access) {
+    request
+        .post('/app/conversations')
+        .send({
+            title: title,
+            access: access
+        })
+        .end((err, res) => {
+            if (err) return done(err);
+            return res.data;
+        });
+}

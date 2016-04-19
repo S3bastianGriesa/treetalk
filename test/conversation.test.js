@@ -44,15 +44,23 @@ describe('Conversation Module', () => {
     });
 
     describe('DELETE /conversations/:id', () => {
-        it('Should delete a conversation from the databse and return it', (done) => {
-
-        });
-
         it('Should delete a Conversation when the User is the owner of it', (done) => {
 
         });
 
-        it('Should delete a Conversation when the User has an admin role and the conversation is not 1 to 1', (done) => {
+        it('Should delete a Conversation when the User has the admin role', (done) => {
+
+        });
+
+        it('Should delete a 1 to 1 Conversation when the User is a member of it', (done) => {
+
+        });
+
+        it('Should return an Error when the Conversation is a 1 to 1 Conversation and the User is no member of it', (done) => {
+
+        });
+
+        it('Should return an Error when the User is not the Owner of the Conversation', (done) => {
 
         });
     });

@@ -125,23 +125,6 @@ describe('Conversation Module', () => {
     });
 
     describe('GET /conversations/:id', () => {
-        let testConversation = null;
-
-        before(() => {
-            const testConversationData = {
-                title: 'TEST GET /conversation/:id',
-                access: 'public'
-            };
-
-            request
-                .post('/app/conversations')
-                .send(testConversationData)
-                .end((err, res) => {
-                    testConversation = res.data;
-                    done(new Error('Not yet implemented'));
-                });
-        });
-
         it('Should return a conversation where the user is a member of', (done) => {
             request
                 .get('/app/conversations/' + testConversation._id)
@@ -149,10 +132,16 @@ describe('Conversation Module', () => {
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
                     should.not.exists(err);
-                    res.data._id.should.equals(testConversation._id);
-                    res.data.title.should.equals(testConversation.title);
-                    res.data.access.should.equals(testConversation.access);
-                    done(new Error('Not yet implemented'));
+                    should.exist(res.text);
+                    res.status.should.equal(200);
+
+                    const data = JSON.parse(res.text);
+
+                    data._id.should.equal(testConversation._id);
+                    data.title.should.equal(testConversation.title);
+                    data.access.should.equal(testConversation.access);
+
+                    done();
                 });
         });
 

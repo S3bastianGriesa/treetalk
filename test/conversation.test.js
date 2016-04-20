@@ -93,6 +93,8 @@ describe('Conversation Module', () => {
 
                     const data = JSON.parse(res.text);
 
+                    console.log(JSON.stringify(data, null, 2));
+
                     data.should.containEql(testConversation);
 
                     done();
@@ -163,7 +165,7 @@ describe('Conversation Module', () => {
 
                     const data = JSON.parse(res.text);
 
-                    data.should.equal(testConversation);
+                    data.should.eql(testConversation);
 
                     done();
                 });

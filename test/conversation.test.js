@@ -1,9 +1,10 @@
 const SERVER_URL = 'http://localhost:8000';
 
 const should = require('should');
-const request = require('supertest')(SERVER_URL);
-const agent = require('supertest').agent(SERVER_URL);
+const request = require('supertest').agent(SERVER_URL);
 const _ = require('underscore');
+
+let testConversation = null;
 
 describe('Conversation Module', () => {
     before((done) => {
@@ -17,40 +18,34 @@ describe('Conversation Module', () => {
             .send(loginData)
             .end((err, res) => {
                 should.not.exist(err);
-                agent.saveCookies(res);
-                console.log(JSON.stringify(res, null, 2));
                 done();
             });
     });
 
     describe('POST /conversations', () => {
-        beforeEach((done) => {
-
-        });
-
         it('Should create a new conversation and return it', (done) => {
             const conversation = {
                 title: 'Mocha Test Conversation',
                 access: 'public'
             };
 
-            const req = request.post('/conversations');
-
-            agent.attachCookies(req);
-
-            console.log(JSON.stringify(req, null, 2));
-
-            req
+            request.post('/app/conversations')
                 .send(conversation)
-                .expect('Content-Type', /json/)
                 .expect(200)
+                .expect('Content-Type', /json/)
                 .end((err, res) => {
                     should.not.exist(err);
-                    res.should.have.status(200);
-                    res.data.title.should.equal(conversation.title);
-                    res.data.access.should.equal(conversation.access);
-                    res.data.owner.should.not.be.null();
-                    res.data.members.length.should.equal(1);
+                    res.status.should.equal(200);
+
+                    const data = JSON.parse(res.text);
+
+                    data.title.should.equal(conversation.title);
+                    data.access.should.equal(conversation.access);
+                    data.owner.should.not.be.null();
+                    data.members.length.should.equal(1);
+
+                    testConversation = data;
+
                     done();
                 });
         });
@@ -58,8 +53,6 @@ describe('Conversation Module', () => {
 
     describe('PUT /conversations/:id', () => {
         it('Should update a conversation and return it', (done) => {
-            done(new Error('Not yet implemented'));
-
             const properties = {
                 title: 'TEST Changed Title',
                 access: 'private',
@@ -72,12 +65,16 @@ describe('Conversation Module', () => {
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
-                    if (err) return done(err);
+                    should.not.exist(err);
                     res.status.should.equal(200);
-                    res.data.title.should.equal(properties.title);
-                    res.data.access.should.equal(properties.access);
-                    res.data.moderators.should.containEql('TEST_USER_ID');
-                    res.data.members.should.containEql('TEST_USER_ID');
+
+                    const data = JSON.parse(res.text);
+
+                    data.title.should.equal(properties.title);
+                    data.access.should.equal(properties.access);
+                    data.moderators.should.containEql('TEST_USER_ID');
+                    data.members.should.containEql('TEST_USER_ID');
+
                     done();
                 });
         });
@@ -87,13 +84,12 @@ describe('Conversation Module', () => {
         it('Should return all conversations where the user is a member of', (done) => {
             request
                 .get('/app/conversations')
-                .expect('Content-Type', /json/)
                 .expect(200)
+                .expect('Content-Type', /json/)
                 .end((err, res) => {
                     should.not.exist(err);
                     res.status.should.equal(200);
-                    res.data.should.exist();
-                    done();
+                    done(new Error('Not yet implemented'));
                 });
         });
 
@@ -103,12 +99,7 @@ describe('Conversation Module', () => {
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
-                    should.not.exist(err);
-                    res.status.should.equal(200);
-                    res.data.should.exist();
-                    //TODO: [JBI] iterate over array and validate with should
-                    res.data[0].access.should.equal('public');
-                    done();
+                    done(new Error('Not yet implemented'));
                 });
         });
     });
@@ -127,6 +118,7 @@ describe('Conversation Module', () => {
                 .send(testConversationData)
                 .end((err, res) => {
                     testConversation = res.data;
+                    done(new Error('Not yet implemented'));
                 });
         });
 
@@ -140,7 +132,7 @@ describe('Conversation Module', () => {
                     res.data._id.should.equals(testConversation._id);
                     res.data.title.should.equals(testConversation.title);
                     res.data.access.should.equals(testConversation.access);
-                    done();
+                    done(new Error('Not yet implemented'));
                 });
         });
 
@@ -151,16 +143,3 @@ describe('Conversation Module', () => {
 
     describe('DELETE /conversations/:id', () => {});
 });
-
-function createTestConversation(title, access) {
-    request
-        .post('/app/conversations')
-        .send({
-            title: title,
-            access: access
-        })
-        .end((err, res) => {
-            if (err) return done(err);
-            return res.data;
-        });
-}

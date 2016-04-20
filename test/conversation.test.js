@@ -150,5 +150,23 @@ describe('Conversation Module', () => {
         });
     });
 
-    describe('DELETE /conversations/:id', () => {});
+    describe('DELETE /conversations/:id', () => {
+        it('Should delete a conversation where the user is the owner', (done) => {
+            request
+                .del('/app/conversations/' + testConversation._id)
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    should.not.exist(err);
+                    should.exist(res.text);
+                    res.status.should.equal(200);
+
+                    const data = JSON.parse(res.text);
+
+                    data.should.equal(testConversation);
+
+                    done();
+                });
+        });
+    });
 });

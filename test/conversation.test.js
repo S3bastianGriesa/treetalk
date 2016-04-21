@@ -43,6 +43,7 @@ describe('Conversation Module', () => {
                     data.access.should.equal(conversation.access);
                     data.owner.should.not.be.null();
                     data.members.length.should.equal(1);
+                    data.moderators.length.should.equal(0);
 
                     testConversation = data;
 
@@ -69,11 +70,12 @@ describe('Conversation Module', () => {
 
                     const data = JSON.parse(res.text);
 
+                    should.exist(data.owner);
                     data.title.should.equal(properties.title);
                     data.access.should.equal(properties.access);
+                    data.members.should.containEql(data.owner);
 
                     testConversation = data;
-                    //TODO: [JBI] find a way to add moderators and members and test if they were added
 
                     done();
                 });
@@ -92,8 +94,6 @@ describe('Conversation Module', () => {
                     res.status.should.equal(200);
 
                     const data = JSON.parse(res.text);
-
-                    console.log(JSON.stringify(data, null, 2));
 
                     data.should.containEql(testConversation);
 

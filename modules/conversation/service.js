@@ -22,13 +22,23 @@ class ConversationService {
         debug('Update Conversation: ' + id);
         debug('Update Conversation Properties: ' + JSON.stringify(properties, null, 2));
 
-        properties.members = _.union(properties.moderators, properties.members);
-
         return Conversation
-            .findByIdAndUpdate(id, properties, {
-                'new': true
-            })
-            .exec();
+            .findById(id)
+            .exec()
+            .then((conversation) => {
+                if (conversation) {
+                    const members = _.union(properties.moderators, properties.members, [conversation.owner]);
+
+                    conversation.title = properties.title || 'New Conversation';
+                    conversation.access = properties.access || 'private';
+                    conversation.moderators = properties.moderators || [];
+                    conversation.members = members || [];
+
+                    return conversation.save();
+                } else {
+                    throw Error('No Conversation with ID ' + id + ' has been found');
+                }
+            });
     }
 
     getConversation(id) {

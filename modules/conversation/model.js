@@ -25,4 +25,10 @@ const ConversationSchema = new mongoose.Schema({
     }
 });
 
+ConversationSchema
+    .virtual('isOneToOneConversation')
+    .get(() => {
+        return this.members.length === 2;
+    });
+
 module.exports = mongoose.model('Conversation', ConversationSchema);

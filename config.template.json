@@ -1,6 +1,20 @@
 {
-  "WEB_PORT": 8000,
-  "WEB_HOST": "localhost",
-  "DB_URL": "MongoDB URL",
-  "SESSION_SECRET": "Random String"
+    "DEVELOPMENT": {
+        "WEB_PORT": 8000,
+        "WEB_HOST": "localhost",
+        "DB_URL": "mongodb://localhost/mydb",
+        "SESSION_SECRET": "AnyRandomString"
+    },
+    "TEST": {
+        "WEB_PORT": 8000,
+        "WEB_HOST": "localhost",
+        "DB_URL": "mongodb://localhost/mydb"
+        "SESSION_SECRET": "AnyRandomString"
+    },
+    "PRODUCTION": {
+      "WEB_PORT": 8000,
+      "WEB_HOST": "localhost",
+      "DB_URL": "mongodb://localhost/mydb"
+      "SESSION_SECRET": "AnyRandomString"
+    }
 }

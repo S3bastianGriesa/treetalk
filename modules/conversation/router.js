@@ -37,7 +37,7 @@ router.put('/conversations/:id', (req, res) => {
 router.get('/conversations/:id', (req, res) => {
     debug('GET /conversations/' + req.params.id);
 
-    conversationService.getConversation(req.params.id)
+    conversationService.getConversation(req.params.id, req.session.user._id)
         .then((conversation) => {
             res.status(200).json(conversation);
         })

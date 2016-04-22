@@ -41,11 +41,14 @@ class ConversationService {
             });
     }
 
-    getConversation(id) {
+    getConversation(id, userId) {
         debug('Get Conversation by ID: ' + id);
 
         return Conversation
-            .findById(id)
+            .find({
+                _id: id,
+                members: new mongoose.Types.ObjectId(userId)
+            })
             .exec();
     }
 

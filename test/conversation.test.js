@@ -7,7 +7,7 @@ const _ = require('underscore');
 let testConversation = null;
 
 describe('Conversation Module', () => {
-    beforeEach((done) => {
+    before((done) => {
         login('test1@mocha.de', 'test')
             .end((err, res) => {
                 should.not.exist(err);
@@ -126,8 +126,7 @@ describe('Conversation Module', () => {
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
-                    should.not.exists(err);
-                    should.exist(res.text);
+                    should.not.exist(err);
                     res.status.should.equal(200);
 
                     const data = JSON.parse(res.text);
@@ -135,30 +134,39 @@ describe('Conversation Module', () => {
                     data._id.should.equal(testConversation._id);
                     data.title.should.equal(testConversation.title);
                     data.access.should.equal(testConversation.access);
+                    data.members.should.containEql(testConversation.owner);
 
                     done();
                 });
         });
 
-        it('Should return an Error when the user is not a member of the conversation', (done) => {
+        it('Should return null when the user is not a member of the conversation', (done) => {
             login('test2@mocha.de', 'test')
                 .end((err, res) => {
                     should.not.exist(err);
                     if (!err) {
                         request.get('/app/conversations/' + testConversation._id)
                             .end((err, res) => {
-                                console.log(JSON.stringify(res, null, 2));
-                                should.exist(err);
+                                should.not.exist(err);
+                                res.text.should.equal('null');
+
                                 done();
                             });
                     }
-                    done();
                 });
 
         });
     });
 
     describe('DELETE /conversations/:id', () => {
+        before((done) => {
+            login('test1@mocha.de', 'test')
+                .end((err, res) => {
+                    should.not.exist(err);
+                    done();
+                });
+        });
+
         it('Should delete a conversation where the user is the owner', (done) => {
             request
                 .del('/app/conversations/' + testConversation._id)

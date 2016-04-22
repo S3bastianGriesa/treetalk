@@ -45,7 +45,7 @@ class ConversationService {
         debug('Get Conversation by ID: ' + id);
 
         return Conversation
-            .find({
+            .findOne({
                 _id: id,
                 members: new mongoose.Types.ObjectId(userId)
             })

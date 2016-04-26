@@ -1,6 +1,5 @@
 #container {
-  width: 80%;
-  min-width: 800px;
+  width: 100%;
   margin-top: 20px;
 }
 #menu {
@@ -14,6 +13,9 @@
   padding: 10px;
 }
 
+.maincontainer{
+  background-color: #DDDDDD;
+}
 
 #chat {
   resize: none;

@@ -29,10 +29,10 @@ class ConversationService {
                 if (conversation) {
                     const members = _.union(properties.moderators, properties.members, [conversation.owner]);
 
-                    conversation.title = properties.title || 'New Conversation';
-                    conversation.access = properties.access || 'private';
-                    conversation.moderators = properties.moderators || [];
-                    conversation.members = members || [];
+                    conversation.title = properties.title || conversation.title;
+                    conversation.access = properties.access || conversation.access;
+                    conversation.moderators = properties.moderators || conversation.moderators;
+                    conversation.members = members || conversation.members;
 
                     return conversation.save();
                 } else {

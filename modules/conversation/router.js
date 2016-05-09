@@ -50,20 +50,12 @@ router.get('/conversations/:id', (req, res) => {
 router.get('/conversations', (req, res) => {
     debug('GET /conversations?filter=' + req.query.filter);
 
-    let getConversationStrategy = conversationService.getUserConversations;
-    let isUserRelatedFunctionCall = true;
-
-    if (req.query.filter === 'public') {
-        isUserRelatedFunctionCall = false;
-        getConversationStrategy = conversationService.getPublicConversations;
-    }
-
     let promise;
 
-    if (isUserRelatedFunctionCall) {
-        promise = getConversationStrategy(req.session.user._id);
+    if (req.query.filter === 'public') {
+        promise = conversationService.getPublicConversations();
     } else {
-        promise = getConversationStrategy();
+        promise = conversationService.getUserConversations(req.session.user._id);
     }
 
     promise

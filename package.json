@@ -12,6 +12,7 @@
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "connect-mongo": "^1.1.0",
+    "conversation": "file:modules\\conversation",
     "crypto-util": "file:./modules/crypto-util",
     "debug": "^2.2.0",
     "express": "^4.13.4",
@@ -22,6 +23,7 @@
     "registration": "file:./modules/registration",
     "strict-mode": "^0.5.0",
     "uid-safe": "^2.1.0",
+    "underscore": "^1.8.3",
     "user": "file:./modules/user"
   },
   "repository": {
@@ -39,5 +41,10 @@
   "homepage": "https://github.com/S3bastianGriesa/treetalk#readme",
   "directories": {
     "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.1",
+    "supertest": "^1.2.0"
   }
 }
